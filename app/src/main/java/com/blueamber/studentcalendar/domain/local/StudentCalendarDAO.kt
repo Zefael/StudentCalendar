@@ -47,12 +47,11 @@ interface BaseDao<T> {
 }
 
 @Dao
-interface MyModelDao : BaseDao<Day> {
+interface DayDao : BaseDao<Day> {
 
     @Query("SELECT * FROM Day")
-    fun getMyModels() : List<Day>
-
+    fun getDays() : List<Day>
 
     @Query("DELETE FROM Day")
-    fun deleteMyModels()
+    fun deleteDays()
 }
