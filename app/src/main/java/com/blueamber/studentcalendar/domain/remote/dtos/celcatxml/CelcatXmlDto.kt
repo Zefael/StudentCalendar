@@ -19,6 +19,7 @@ class EventDto {
     @field:Element(name = "starttime", required = false) var startTime: String = ""
     @field:Element(name = "prettytimes", required = false) var prettyTimes: String = ""
     @field:Element(name = "day", required = false) var day: Int? = null
+    @field:Element(name = "notes", required = false) var notes: String = ""
 }
 
 @Root(name = "resources", strict = false)

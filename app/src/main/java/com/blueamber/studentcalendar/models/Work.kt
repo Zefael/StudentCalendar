@@ -12,4 +12,5 @@ data class Work(@PrimaryKey val id: Int,
                 val hourEnd: String,
                 val professors: String,
                 val rooms: String,
+                val group: String,
                 val notes: String): Parcelable
