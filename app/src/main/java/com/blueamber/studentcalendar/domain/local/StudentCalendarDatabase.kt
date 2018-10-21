@@ -6,4 +6,7 @@ import com.blueamber.studentcalendar.models.Day
 
 @Database(entities = [Day::class], version = 1, exportSchema = true)
 abstract class StudentCalendarDatabase : RoomDatabase() {
+
+    abstract fun dayDao() : DayDao
+
 }

@@ -5,12 +5,14 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Work(@PrimaryKey val id: Int,
-                val titre: String,
+data class Work(val titre: String,
                 val type: String,
                 val hourStart: String,
                 val hourEnd: String,
                 val professors: String,
                 val rooms: String,
                 val group: String,
-                val notes: String): Parcelable
+                val notes: String): Parcelable {
+
+    @PrimaryKey(autoGenerate = true) var id: Long = 0
+}
