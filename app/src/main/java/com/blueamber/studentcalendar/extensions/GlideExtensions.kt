@@ -1,8 +1,8 @@
-package com.enterprise.baseproject.extensions
+package com.blueamber.studentcalendar.extensions
 
 import android.net.Uri
 import android.widget.ImageView
-import com.enterprise.baseproject.util.GlideApp
+import com.blueamber.studentcalendar.tools.GlideApp
 
 fun ImageView.glide(url: String) {
     GlideApp.with(context).load(url).into(this)

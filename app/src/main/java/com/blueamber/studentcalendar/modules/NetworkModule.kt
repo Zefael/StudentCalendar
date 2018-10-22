@@ -2,6 +2,7 @@ package com.blueamber.studentcalendar.modules
 
 import com.blueamber.studentcalendar.BuildConfig
 import com.blueamber.studentcalendar.domain.remote.*
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -50,6 +51,7 @@ class NetworkModule {
         return Retrofit.Builder()
             .baseUrl("https://raw.githubusercontent.com")
             .addConverterFactory(jsonConverterFactory)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(client)
             .build()
             .create(NetworkJsonApi::class.java)
@@ -71,8 +73,9 @@ class NetworkModule {
     fun provideNetworkXmlApi(xmlConverterFactory: SimpleXmlConverterFactory,
                              client: OkHttpClient): NetworkXmlApi {
         return Retrofit.Builder()
-            .baseUrl("http://api.autoplus.fr")
+            .baseUrl("https://edt-st.u-bordeaux.fr")
             .addConverterFactory(xmlConverterFactory)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(client)
             .build()
             .create(NetworkXmlApi::class.java)
@@ -80,7 +83,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideNetworkXmlRepository(networkXmlJsonApi: NetworkXmlApi): NetworkXmlRepository {
-        return NetworkXmlRepository(networkXmlJsonApi)
+    fun provideNetworkXmlRepository(networkXmlApi: NetworkXmlApi): NetworkXmlRepository {
+        return NetworkXmlRepository(networkXmlApi)
     }
 }

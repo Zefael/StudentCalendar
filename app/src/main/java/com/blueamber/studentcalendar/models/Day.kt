@@ -8,4 +8,8 @@ import java.util.*
 
 @Entity
 @Parcelize
-data class Day(@PrimaryKey val date: Date, val works: List<Work>) : Parcelable
+data class Day(val date: Date, val works: List<Work>) : Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+}

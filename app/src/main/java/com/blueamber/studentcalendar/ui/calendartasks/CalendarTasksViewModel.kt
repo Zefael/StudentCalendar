@@ -1,15 +1,18 @@
 package com.blueamber.studentcalendar.ui.calendartasks
 
 import android.arch.lifecycle.ViewModel
-import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
+import com.blueamber.studentcalendar.domain.local.DayDao
+import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
 import kotlinx.coroutines.experimental.launch
+import javax.inject.Inject
 
-class CalendarTasksViewModel(private val celcatUseCase: CelcatUseCase, private val calendarUseCase: CalendarUseCase) : ViewModel() {
+class CalendarTasksViewModel @Inject constructor(private val remote: NetworkXmlRepository, private val locale: DayDao) :
+    ViewModel() {
 
     fun downloadCalendars() {
         launch {
-            val isCelcatDownload = celcatUseCase.downloadCelcat()
+            val isCelcatDownload = CelcatUseCase(remote, locale).downloadCelcat()
         }
     }
 }
