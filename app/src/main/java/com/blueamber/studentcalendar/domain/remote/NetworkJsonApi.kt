@@ -4,11 +4,10 @@ import com.blueamber.studentcalendar.domain.remote.dtos.calendarjson.CalendarJso
 import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.CelcatXmlDto
 import kotlinx.coroutines.experimental.Deferred
 import retrofit2.Response
-import javax.inject.Inject
+import retrofit2.http.GET
 
-class NetworkRepository @Inject constructor(private val api: NetworkAPI) {
+interface NetworkJsonApi {
 
-    fun getCelcat() : Deferred<Response<CelcatXmlDto>> = api.getCelcatDto()
-
-    fun getCalendar() : Deferred<Response<Map<String, CalendarJsonDto>>> = api.getCalendarDto()
+    @GET("https://raw.githubusercontent.com/master-bioinfo-bordeaux/master-bioinfo-bordeaux.github.io/master/data/calendar_m1.json")
+    fun getCalendarDto(): Deferred<Response<Map<String, CalendarJsonDto>>>
 }

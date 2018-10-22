@@ -2,7 +2,8 @@ package com.blueamber.studentcalendar.domain.usecases
 
 import android.util.Log
 import com.blueamber.studentcalendar.domain.local.DayDao
-import com.blueamber.studentcalendar.domain.remote.NetworkRepository
+import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
+import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.CelcatXmlDto
 import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.EventDto
 import com.blueamber.studentcalendar.models.Day
@@ -12,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CelcatUseCase(private val remote: NetworkRepository, private val local: DayDao) {
+class CelcatUseCase(private val remote: NetworkXmlRepository, private val local: DayDao) {
 
     suspend fun downloadCelcat(): Boolean {
         var result: Boolean
