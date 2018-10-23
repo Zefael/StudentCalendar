@@ -49,12 +49,12 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
 
     private fun buildWork(eventDto: EventDto): Work {
         return Work(
-            buildListItemToString(eventDto.resources?.modules?.items ?: emptyList()),
+            buildListItemToString(eventDto.resources?.modules ?: emptyList()),
             eventDto.category, eventDto.startTime,
             eventDto.endTime,
-            buildListItemToString(eventDto.resources?.staffs?.items ?: emptyList()),
-            buildListItemToString(eventDto.resources?.rooms?.items ?: emptyList()),
-            buildListItemToString(eventDto.resources?.groups?.items ?: emptyList()),
+            buildListItemToString(eventDto.resources?.staffs ?: emptyList()),
+            buildListItemToString(eventDto.resources?.rooms ?: emptyList()),
+            buildListItemToString(eventDto.resources?.groups ?: emptyList()),
             eventDto.notes
         )
     }

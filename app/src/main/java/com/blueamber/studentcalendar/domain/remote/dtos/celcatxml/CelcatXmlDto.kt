@@ -1,9 +1,6 @@
 package com.blueamber.studentcalendar.domain.remote.dtos.celcatxml
 
-import org.simpleframework.xml.Attribute
-import org.simpleframework.xml.Element
-import org.simpleframework.xml.ElementList
-import org.simpleframework.xml.Root
+import org.simpleframework.xml.*
 
 @Root(name = "timetable", strict = false)
 data class CelcatXmlDto @JvmOverloads constructor (
@@ -24,28 +21,8 @@ class EventDto {
 
 @Root(name = "resources", strict = false)
 class ResourcesDto {
-    @field:Element(name = "module", required = false) var modules: ModuleDto? = null
-    @field:Element(name = "staff", required = false) var staffs: StaffDto? = null
-    @field:Element(name = "group", required = false) var groups: GroupDto? = null
-    @field:Element(name = "room", required = false) var rooms: RoomDto? = null
-}
-
-@Root(name = "staff", strict = false)
-class StaffDto {
-    @field:ElementList(name = "item", inline = true, required = false) var items: List<String> = ArrayList()
-}
-
-@Root(name = "module", strict = false)
-class ModuleDto {
-    @field:ElementList(name = "item", inline = true, required = false) var items: List<String> = ArrayList()
-}
-
-@Root(name = "group", strict = false)
-class GroupDto {
-    @field:ElementList(name = "item", inline = true, required = false) var items: List<String> = ArrayList()
-}
-
-@Root(name = "room", strict = false)
-class RoomDto {
-    @field:ElementList(name = "item", inline = true, required = false) var items: List<String> = ArrayList()
+    @field:ElementList(name = "module", entry = "item", required = false, type = String::class) var modules: List<String> = ArrayList()
+    @field:ElementList(name = "staff", entry = "item", required = false, type = String::class) var staffs: List<String> = ArrayList()
+    @field:ElementList(name = "group", entry = "item", required = false, type = String::class) var groups: List<String> = ArrayList()
+    @field:ElementList(name = "room", entry = "item", required = false, type = String::class) var rooms: List<String> = ArrayList()
 }
