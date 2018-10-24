@@ -35,4 +35,47 @@ object DateUtil {
         return c1.get(Calendar.DAY_OF_YEAR) - c2.get(Calendar.DAY_OF_YEAR)
     }
 
+    fun monthOfDate(date: Long): String {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = date
+
+        when(calendar.get(Calendar.MONTH)) {
+            Calendar.JANUARY -> return "Janvier"
+            Calendar.FEBRUARY -> return "Février"
+            Calendar.MARCH -> return "Mars"
+            Calendar.APRIL -> return "Avril"
+            Calendar.MAY -> return "Mai"
+            Calendar.JUNE -> return "Juin"
+            Calendar.JULY -> return "Juillet"
+            Calendar.AUGUST -> return "Août"
+            Calendar.SEPTEMBER -> return "Septembre"
+            Calendar.OCTOBER -> return "Octobre"
+            Calendar.NOVEMBER -> return "Novembre"
+            Calendar.DECEMBER -> return "Décembre"
+            else -> return ""
+        }
+    }
+
+    fun dayOfWeek(date: Long): String {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = date
+
+        when(calendar.get(Calendar.DAY_OF_WEEK)) {
+            Calendar.MONDAY -> return "lun."
+            Calendar.TUESDAY -> return "mar."
+            Calendar.WEDNESDAY -> return "mer."
+            Calendar.THURSDAY -> return "jeu."
+            Calendar.FRIDAY -> return "ven."
+            Calendar.SATURDAY -> return "sam."
+            Calendar.SUNDAY -> return "dim."
+            else -> return ""
+        }
+    }
+
+    fun dayOfMonth(date: Long): Int {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = date
+
+        return calendar.get(Calendar.DAY_OF_MONTH)
+    }
 }

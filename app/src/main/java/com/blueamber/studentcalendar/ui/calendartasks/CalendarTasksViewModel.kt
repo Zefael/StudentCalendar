@@ -15,4 +15,8 @@ class CalendarTasksViewModel @Inject constructor(private val remote: NetworkXmlR
             val isCelcatDownload = CelcatUseCase(remote, locale).downloadCelcat()
         }
     }
+
+    fun setToolbarTitle(title: String) {
+
+    }
 }
