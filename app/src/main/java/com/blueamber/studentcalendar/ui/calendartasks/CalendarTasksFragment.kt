@@ -2,6 +2,7 @@ package com.blueamber.studentcalendar.ui.calendartasks
 
 import android.arch.lifecycle.ViewModelProviders
 import android.support.design.widget.Snackbar
+import android.support.v7.widget.LinearLayoutManager
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.ui.NavigationFragment
 import kotlinx.android.synthetic.main.calendar_tasks_fragment.*
@@ -13,6 +14,7 @@ class CalendarTasksFragment : NavigationFragment() {
     }
 
     private lateinit var viewModel: CalendarTasksViewModel
+    private lateinit var adapter: CalendarTasksAdapter
 
     override fun getLayoutId() = R.layout.calendar_tasks_fragment
 

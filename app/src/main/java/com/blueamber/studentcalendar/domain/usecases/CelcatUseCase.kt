@@ -6,6 +6,7 @@ import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.CelcatXmlDto
 import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.EventDto
 import com.blueamber.studentcalendar.models.Day
+import com.blueamber.studentcalendar.models.TypeOfSource
 import com.blueamber.studentcalendar.models.Work
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -50,7 +51,9 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
     private fun buildWork(eventDto: EventDto): Work {
         return Work(
             buildListItemToString(eventDto.resources?.modules ?: emptyList()),
-            eventDto.category, eventDto.startTime,
+            eventDto.category,
+            TypeOfSource.CELCAT,
+            eventDto.startTime,
             eventDto.endTime,
             buildListItemToString(eventDto.resources?.staffs ?: emptyList()),
             buildListItemToString(eventDto.resources?.rooms ?: emptyList()),

@@ -12,41 +12,45 @@ import kotlinx.android.synthetic.main.item_tasks_by_day.*
 
 class CalendarTasksAdapter(
     private val layoutManager: LinearLayoutManager,
-    data: List<Day>,
+    private val data: List<Day>,
     private val calendarTasksViewModel: CalendarTasksViewModel
 ) : BaseRecyclerAdapter<Day>(data) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHolder<Day> =
-        DayHolder(layoutManager, parent, calendarTasksViewModel)
+        DayHolder(data, layoutManager, parent, calendarTasksViewModel)
+
 
     class DayHolder(
+        private val dataList: List<Day>,
         private val layoutManager: LinearLayoutManager,
         parent: ViewGroup,
         private val viewModel: CalendarTasksViewModel
     ) : BaseHolder<Day>(parent, R.layout.item_tasks_by_day) {
 
         override fun display() {
-            /*data?.let {
+            // Set recycler
+            eventDay.setHasFixedSize(true)
+            eventDay.layoutManager = LinearLayoutManager(context)
+            val adapter = EventCalendarTasksAdapter()
+            eventDay.adapter = adapter
+
+            data?.let {
                 // Change title of Toolbar
                 val itemFirstVisible = layoutManager.findFirstVisibleItemPosition() + 1
                 if (itemFirstVisible >= 0) {
-                    viewModel.setToolbarTitle(DateUtil.monthOfDate(it.get(itemFirstVisible).date))
+                    viewModel.setToolbarTitle(DateUtil.monthOfDate(dataList[itemFirstVisible].date.time))
                 }
                 simple_separation.visibility = View.VISIBLE
                 month_separation.visibility = View.GONE
                 // Set item
                 jour.text = DateUtil.dayOfMonth(it.date.time).toString()
                 jour_semaine.text = DateUtil.dayOfWeek(it.date.time)
-                // Set recycler
-                eventDay.setHasFixedSize(true)
-                eventDay.layoutManager = LinearLayoutManager(context)
-                val adapter = EventCalendarTasksAdapter(it.works)
-                eventDay.adapter = adapter
+                adapter.update(it.works)
                 // Change separation item
-                if ( != i +1) {
-                    val dayFuture = it.get(i + 1)
-                    val nowMonth = DateUtil.monthOfDate(it.getDate())
-                    val nextMonth = DateUtil.monthOfDate(dayFuture.getDate())
+                if (dataList.size != layoutPosition +1) {
+                    val dayFuture = dataList[layoutPosition + 1]
+                    val nowMonth = DateUtil.monthOfDate(it.date.time)
+                    val nextMonth = DateUtil.monthOfDate(dayFuture.date.time)
                     if (nowMonth != nextMonth) {
                         simple_separation.visibility = View.GONE
                         month_separation.visibility = View.VISIBLE
@@ -55,7 +59,7 @@ class CalendarTasksAdapter(
                 } else {
                     simple_separation.visibility = View.GONE
                 }
-            }*/
+            }
         }
     }
 }
