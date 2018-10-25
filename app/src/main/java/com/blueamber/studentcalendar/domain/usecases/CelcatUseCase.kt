@@ -8,10 +8,7 @@ import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.EventDto
 import com.blueamber.studentcalendar.models.Day
 import com.blueamber.studentcalendar.models.TypeOfSource
 import com.blueamber.studentcalendar.models.Work
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
+import com.enterprise.baseproject.util.DateUtil
 
 class CelcatUseCase(private val remote: NetworkXmlRepository, private val local: DayDao) {
 
@@ -25,7 +22,11 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
                 sortAndInsertInBase(response.body() ?: CelcatXmlDto())
             }
         } catch (exception: Exception) {
-            Log.d(CelcatUseCase::class.java.simpleName, "download Celcat xml file and insert in database", exception)
+            Log.e(
+                CelcatUseCase::class.java.simpleName,
+                "Failed : download Celcat xml file and insert in database",
+                exception
+            )
             result = false
         }
         return result
@@ -33,15 +34,15 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
 
     private fun sortAndInsertInBase(celcatXmlDto: CelcatXmlDto) {
         val sortedCelcat = celcatXmlDto.event.sortedWith(compareBy { it.date })
-        var date = sortedCelcat.get(0).date
+        var date = sortedCelcat[0].date
         var works: ArrayList<Work> = ArrayList()
 
         for (event in sortedCelcat) {
             val work = buildWork(event)
-            if (date.equals(event.date)) {
+            if (date == event.date) {
                 works.add(work)
             } else {
-                local.insert(Day(formatDate(date), works))
+                local.insert(Day(DateUtil.formatDate(date), works))
                 date = event.date
                 works = ArrayList()
             }
@@ -68,14 +69,5 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
             result += item + "\n"
         }
         return result
-    }
-
-    private fun formatDate(date: String): Date {
-        return try {
-            SimpleDateFormat("dd MMM yyyy", Locale.FRANCE).parse(date)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-            Date()
-        }
     }
 }

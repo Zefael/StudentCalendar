@@ -2,7 +2,6 @@ package com.blueamber.studentcalendar.ui.calendartasks
 
 import android.arch.lifecycle.ViewModelProviders
 import android.support.design.widget.Snackbar
-import android.support.v7.widget.LinearLayoutManager
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.ui.NavigationFragment
 import kotlinx.android.synthetic.main.calendar_tasks_fragment.*
@@ -29,6 +28,10 @@ class CalendarTasksFragment : NavigationFragment() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+    }
+
+    override fun setupObservers() {
+        // TODO use observer for observe change of mutable live data in view model
     }
 
     override fun setupData() {

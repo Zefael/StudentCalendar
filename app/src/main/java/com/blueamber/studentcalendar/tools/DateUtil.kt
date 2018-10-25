@@ -1,5 +1,7 @@
 package com.enterprise.baseproject.util
 
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtil {
@@ -77,5 +79,14 @@ object DateUtil {
         calendar.timeInMillis = date
 
         return calendar.get(Calendar.DAY_OF_MONTH)
+    }
+
+    fun formatDate(date: String): Date {
+        return try {
+            SimpleDateFormat("dd MMM yyyy", Locale.FRANCE).parse(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            Date()
+        }
     }
 }
