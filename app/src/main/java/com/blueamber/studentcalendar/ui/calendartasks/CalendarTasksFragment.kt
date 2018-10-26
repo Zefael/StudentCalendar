@@ -1,7 +1,9 @@
 package com.blueamber.studentcalendar.ui.calendartasks
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.support.design.widget.Snackbar
+import android.support.v7.widget.LinearLayoutManager
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.ui.NavigationFragment
 import kotlinx.android.synthetic.main.calendar_tasks_fragment.*
@@ -31,10 +33,15 @@ class CalendarTasksFragment : NavigationFragment() {
     }
 
     override fun setupObservers() {
-        // TODO use observer for observe change of mutable live data in view model
+        viewModel.isDataDownloaded.observe(this,
+            Observer { adapter.update(viewModel.getDataCalendarFromDatabase(), true) })
     }
 
     override fun setupData() {
         viewModel.downloadCalendars()
+        val manager = LinearLayoutManager(requireContext())
+        adapter = CalendarTasksAdapter(manager, emptyList(), viewModel)
+        tasks_planing.layoutManager = manager
+        tasks_planing.adapter = adapter
     }
 }

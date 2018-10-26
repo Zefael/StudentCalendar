@@ -4,6 +4,7 @@ import android.util.Log
 import com.blueamber.studentcalendar.domain.local.DayDao
 import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.calendarjson.CalendarJsonDto
+import com.blueamber.studentcalendar.models.Day
 import com.blueamber.studentcalendar.models.TypeOfSource
 import com.blueamber.studentcalendar.models.Work
 import com.enterprise.baseproject.util.DateUtil
@@ -27,24 +28,32 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
     }
 
     private fun sortAndInsertInBase(data: Map<String, CalendarJsonDto>) {
-        // TODO : need to sort my data before map
-        val dataSorted = data.toList().sortedBy { (_, value) -> DateUtil.formatDate(value.date_start ?: "") }.toMap()
+        val dataSorted = data.toList().sortedBy { (_, value) -> DateUtil.formatDate(value.date_start) }.toMap()
+        var date = dataSorted.values.elementAt(0).date_start
+        var works: ArrayList<Work> = ArrayList()
         dataSorted.forEach{ (_, item) ->
             val work = buildWork(item)
+            if (date == item.date_start) {
+                works.add(work)
+            } else {
+                local.insert(Day(DateUtil.formatDate(date), works))
+                date = item.date_start
+                works = ArrayList()
+            }
         }
     }
 
     private fun buildWork(calendarJsonDto: CalendarJsonDto): Work {
         return Work(
-            calendarJsonDto.acronym?.substring("::".indices) ?: "",
-            calendarJsonDto.type ?: "",
+            calendarJsonDto.acronym.substring("::".indices),
+            calendarJsonDto.type,
             TypeOfSource.OTHER,
-            calendarJsonDto.date_start?.substring("T".indices) ?: "",
-            calendarJsonDto.date_end?.substring("T".indices) ?: "",
-            calendarJsonDto.lecturer ?: "",
-            calendarJsonDto.location?.substring("::".indices) ?: "",
-            calendarJsonDto.group ?: "",
-            if (calendarJsonDto.comment != null && calendarJsonDto.comment.contains("Imported"))  "" else (calendarJsonDto.comment ?: "")
+            calendarJsonDto.date_start.substring("T".indices),
+            calendarJsonDto.date_end.substring("T".indices),
+            calendarJsonDto.lecturer,
+            calendarJsonDto.location.substring("::".indices),
+            calendarJsonDto.group,
+            if (calendarJsonDto.comment.contains("Imported"))  "" else (calendarJsonDto.comment)
         )
     }
 }
