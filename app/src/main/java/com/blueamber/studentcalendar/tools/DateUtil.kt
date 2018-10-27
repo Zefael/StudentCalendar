@@ -1,10 +1,12 @@
-package com.enterprise.baseproject.util
+package com.blueamber.studentcalendar.tools
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtil {
+
+    const val PATTERN_DATE = "dd-MM-yyyy"
 
     fun isToday(date: Long): Boolean {
         val currentDate = Calendar.getInstance()
@@ -41,20 +43,20 @@ object DateUtil {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = date
 
-        when(calendar.get(Calendar.MONTH)) {
-            Calendar.JANUARY -> return "Janvier"
-            Calendar.FEBRUARY -> return "Février"
-            Calendar.MARCH -> return "Mars"
-            Calendar.APRIL -> return "Avril"
-            Calendar.MAY -> return "Mai"
-            Calendar.JUNE -> return "Juin"
-            Calendar.JULY -> return "Juillet"
-            Calendar.AUGUST -> return "Août"
-            Calendar.SEPTEMBER -> return "Septembre"
-            Calendar.OCTOBER -> return "Octobre"
-            Calendar.NOVEMBER -> return "Novembre"
-            Calendar.DECEMBER -> return "Décembre"
-            else -> return ""
+        return when (calendar.get(Calendar.MONTH)) {
+            Calendar.JANUARY -> "Janvier"
+            Calendar.FEBRUARY -> "Février"
+            Calendar.MARCH -> "Mars"
+            Calendar.APRIL -> "Avril"
+            Calendar.MAY -> "Mai"
+            Calendar.JUNE -> "Juin"
+            Calendar.JULY -> "Juillet"
+            Calendar.AUGUST -> "Août"
+            Calendar.SEPTEMBER -> "Septembre"
+            Calendar.OCTOBER -> "Octobre"
+            Calendar.NOVEMBER -> "Novembre"
+            Calendar.DECEMBER -> "Décembre"
+            else -> ""
         }
     }
 
@@ -62,15 +64,15 @@ object DateUtil {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = date
 
-        when(calendar.get(Calendar.DAY_OF_WEEK)) {
-            Calendar.MONDAY -> return "lun."
-            Calendar.TUESDAY -> return "mar."
-            Calendar.WEDNESDAY -> return "mer."
-            Calendar.THURSDAY -> return "jeu."
-            Calendar.FRIDAY -> return "ven."
-            Calendar.SATURDAY -> return "sam."
-            Calendar.SUNDAY -> return "dim."
-            else -> return ""
+        return when (calendar.get(Calendar.DAY_OF_WEEK)) {
+            Calendar.MONDAY -> "lun."
+            Calendar.TUESDAY -> "mar."
+            Calendar.WEDNESDAY -> "mer."
+            Calendar.THURSDAY -> "jeu."
+            Calendar.FRIDAY -> "ven."
+            Calendar.SATURDAY -> "sam."
+            Calendar.SUNDAY -> "dim."
+            else -> ""
         }
     }
 
@@ -81,12 +83,29 @@ object DateUtil {
         return calendar.get(Calendar.DAY_OF_MONTH)
     }
 
-    fun formatDate(date: String): Date {
+    fun formatDateSlash(date: String): Date {
         return try {
-            SimpleDateFormat("dd MMM yyyy", Locale.FRANCE).parse(date)
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE)
+            val dateFormat = sdf.parse(date)
+            sdf.applyPattern(PATTERN_DATE)
+            sdf.parse(sdf.format(dateFormat))
         } catch (e: ParseException) {
             e.printStackTrace()
             Date()
         }
     }
+
+    fun formatDateDashT(date: String): Date {
+        return try {
+            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.FRANCE)
+            val dateFormat = sdf.parse(date)
+            sdf.applyPattern(PATTERN_DATE)
+            sdf.parse(sdf.format(dateFormat))
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            Date()
+        }
+    }
+
+
 }

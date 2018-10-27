@@ -5,23 +5,21 @@ import android.view.View
 import android.view.ViewGroup
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.Day
+import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.ui.base.recycler.BaseHolder
 import com.blueamber.studentcalendar.ui.base.recycler.BaseRecyclerAdapter
-import com.enterprise.baseproject.util.DateUtil
 import kotlinx.android.synthetic.main.item_tasks_by_day.*
 
 class CalendarTasksAdapter(
     private val layoutManager: LinearLayoutManager,
-    private val data: List<Day>,
     private val calendarTasksViewModel: CalendarTasksViewModel
-) : BaseRecyclerAdapter<Day>(data) {
+) : BaseRecyclerAdapter<Day>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHolder<Day> =
-        DayHolder(data, layoutManager, parent, calendarTasksViewModel)
+        DayHolder(layoutManager, parent, calendarTasksViewModel)
 
 
     class DayHolder(
-        private val dataList: List<Day>,
         private val layoutManager: LinearLayoutManager,
         parent: ViewGroup,
         private val viewModel: CalendarTasksViewModel
@@ -37,7 +35,7 @@ class CalendarTasksAdapter(
             data?.let {
                 // Change title of Toolbar
                 val itemFirstVisible = layoutManager.findFirstVisibleItemPosition() + 1
-                if (itemFirstVisible >= 0) {
+                if (itemFirstVisible > 0) {
                     viewModel.setToolbarTitle(DateUtil.monthOfDate(dataList[itemFirstVisible].date.time))
                 }
                 simple_separation.visibility = View.VISIBLE

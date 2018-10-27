@@ -1,5 +1,6 @@
 package com.blueamber.studentcalendar.domain.usecases
 
+import android.content.Context
 import android.util.Log
 import com.blueamber.studentcalendar.domain.local.DayDao
 import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
@@ -8,31 +9,34 @@ import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.EventDto
 import com.blueamber.studentcalendar.models.Day
 import com.blueamber.studentcalendar.models.TypeOfSource
 import com.blueamber.studentcalendar.models.Work
-import com.enterprise.baseproject.util.DateUtil
+import com.blueamber.studentcalendar.tools.DateUtil
+import com.blueamber.studentcalendar.tools.FileUtil
+import org.simpleframework.xml.core.Persister
 
 class CelcatUseCase(private val remote: NetworkXmlRepository, private val local: DayDao) {
 
-    fun downloadCelcat(): Boolean {
-        var result: Boolean
-        try {
+    suspend fun downloadCelcat(context: Context): List<Day> {
+        return try {
             val request = remote.getCelcat()
-            val response = request.getCompleted()
-            result = request.isCompleted
-            if (result) {
-                sortAndInsertInBase(response.body() ?: CelcatXmlDto())
-            }
+            val response = request.await()
+            if (request.isCompleted) {
+                val serializer = Persister()
+                val source = FileUtil.writeResponseBodyToDisk(context, response.body(), "calendrier_semestre.xml")
+                val semestre = serializer.read<CelcatXmlDto>(CelcatXmlDto::class.java, source)
+                convert(semestre)
+            } else emptyList()
         } catch (exception: Exception) {
             Log.e(
                 CelcatUseCase::class.java.simpleName,
                 "Failed : download Celcat xml file and insert in database",
                 exception
             )
-            result = false
+            emptyList()
         }
-        return result
     }
 
-    private fun sortAndInsertInBase(celcatXmlDto: CelcatXmlDto) {
+    private fun convert(celcatXmlDto: CelcatXmlDto): List<Day> {
+        val result = ArrayList<Day>()
         val sortedCelcat = celcatXmlDto.event.sortedWith(compareBy { it.date })
         var date = sortedCelcat[0].date
         var works: ArrayList<Work> = ArrayList()
@@ -42,11 +46,12 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
             if (date == event.date) {
                 works.add(work)
             } else {
-                local.insert(Day(DateUtil.formatDate(date), works))
+                result.add(Day(DateUtil.formatDateSlash(date), works))
                 date = event.date
                 works = ArrayList()
             }
         }
+        return result
     }
 
     private fun buildWork(eventDto: EventDto): Work {

@@ -10,7 +10,7 @@ import android.webkit.WebView
 import android.widget.ImageSwitcher
 import android.widget.TextView
 import android.widget.ViewSwitcher
-import com.enterprise.baseproject.util.HtmlUtil
+import com.blueamber.studentcalendar.tools.HtmlUtil
 
 // Common
 fun View.animateAlpha(alpha: Float, duration: Long) {

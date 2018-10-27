@@ -24,36 +24,35 @@ class EventCalendarTasksAdapter : BaseRecyclerAdapter<Any>() {
                     notes.text = context.resources.getString(R.string.notes_event, it.notes)
                 }
 
-                var dw = R.drawable.card_event_default
-                when (it.type) {
-                    "Cours" -> dw = getCardLesson(it.typeOfSource)
-                    "TD" -> dw = getCardTD(it.typeOfSource)
-                    "Cours+TD" -> dw = getCardLessonAndTD(it.typeOfSource)
+                val color = when (it.type) {
+                    "Cours" -> getCardLesson(it.typeOfSource)
+                    "TD" -> getCardTD(it.typeOfSource)
+                    "Cours+TD" -> getCardLessonAndTD(it.typeOfSource)
+                    else -> R.color.grey
                 }
 
-                val drawable = context.getDrawable(dw)
-                eventCard.background = drawable
+                eventCard.setBackgroundColor(color)
             }
         }
 
         private fun getCardLesson(typeOfSource: TypeOfSource): Int {
-            when (typeOfSource) {
-                TypeOfSource.CELCAT -> return R.drawable.card_event_cours_celcat
-                TypeOfSource.OTHER -> return R.drawable.card_event_cours_other
+            return when (typeOfSource) {
+                TypeOfSource.CELCAT -> R.color.blue_light
+                TypeOfSource.OTHER -> R.color.orange
             }
         }
 
         private fun getCardTD(typeOfSource: TypeOfSource): Int {
-            when (typeOfSource) {
-                TypeOfSource.CELCAT -> return R.drawable.card_event_td_celcat
-                TypeOfSource.OTHER -> return R.drawable.card_event_td_other
+            return when (typeOfSource) {
+                TypeOfSource.CELCAT -> R.color.blue
+                TypeOfSource.OTHER -> R.color.red
             }
         }
 
         private fun getCardLessonAndTD(typeOfSource: TypeOfSource): Int {
-            when (typeOfSource) {
-                TypeOfSource.CELCAT -> return R.drawable.card_event_cours_td_celcat
-                TypeOfSource.OTHER -> return R.drawable.card_event_cours_td_other
+            return when (typeOfSource) {
+                TypeOfSource.CELCAT -> R.color.blue
+                TypeOfSource.OTHER -> R.color.red
             }
         }
 

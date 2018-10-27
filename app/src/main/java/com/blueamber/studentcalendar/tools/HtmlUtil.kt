@@ -1,4 +1,4 @@
-package com.enterprise.baseproject.util
+package com.blueamber.studentcalendar.tools
 
 import android.content.Context
 import android.os.Build

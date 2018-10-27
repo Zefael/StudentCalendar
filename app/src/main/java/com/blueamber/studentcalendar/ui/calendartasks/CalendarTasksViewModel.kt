@@ -1,5 +1,6 @@
 package com.blueamber.studentcalendar.ui.calendartasks
 
+import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.blueamber.studentcalendar.domain.local.DayDao
@@ -8,30 +9,50 @@ import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
 import com.blueamber.studentcalendar.models.Day
+import com.blueamber.studentcalendar.models.Work
 import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
 import javax.inject.Inject
 
 class CalendarTasksViewModel @Inject constructor(
+    private val app: Application,
     private val remoteXml: NetworkXmlRepository,
     private val remoteJson: NetworkJsonRepository,
     private val locale: DayDao
 ) : ViewModel() {
 
-    val isDataDownloaded = MutableLiveData<Boolean>()
+    val dataDownloaded = MutableLiveData<List<Day>>()
 
-    fun downloadCalendars() {
-        launch {
-            val isCelcatDownloaded = CelcatUseCase(remoteXml, locale).downloadCelcat()
-            val isJsonCalendarDownlaoded = CalendarUseCase(remoteJson, locale).downloadJsonCalendar()
-            withContext(UI) { isDataDownloaded.value = (isCelcatDownloaded && isJsonCalendarDownlaoded)}
-        }
+    fun downloadCalendars() = launch {
+        locale.deleteDays()
+        val dataCelcat = CelcatUseCase(remoteXml, locale).downloadCelcat(app)
+        val dataOther = CalendarUseCase(remoteJson, locale).downloadJsonCalendar()
+        locale.insert(sortDataDay(dataCelcat, dataOther))
+        val dataDay = locale.getDays()
+        withContext(UI) { dataDownloaded.value = dataDay }
     }
 
-    fun getDataCalendarFromDatabase(): List<Day> {
-        return async { locale.getDays() }.getCompleted()
+    private fun sortDataDay(data1: List<Day>, data2: List<Day>): List<Day> {
+        val result = ArrayList<Day>()
+        result.addAll(data1)
+        data2.forEach { it2 ->
+            var isAdded = false
+            result.forEach lit@{ it1 ->
+                if (it1.date == it2.date) {
+                    val works = ArrayList<Work>()
+                    works.addAll(it1.works)
+                    works.addAll(it2.works)
+                    it1.works = works.sorted()
+                    isAdded = true
+                    return@lit
+                }
+            }
+            if (!isAdded) {
+                result.add(it2)
+            }
+        }
+        return result.sorted()
     }
 
     fun setToolbarTitle(title: String) {

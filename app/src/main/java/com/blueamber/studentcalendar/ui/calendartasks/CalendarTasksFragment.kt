@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import com.blueamber.studentcalendar.R
+import com.blueamber.studentcalendar.models.Day
 import com.blueamber.studentcalendar.ui.NavigationFragment
 import kotlinx.android.synthetic.main.calendar_tasks_fragment.*
 
@@ -33,14 +34,14 @@ class CalendarTasksFragment : NavigationFragment() {
     }
 
     override fun setupObservers() {
-        viewModel.isDataDownloaded.observe(this,
-            Observer { adapter.update(viewModel.getDataCalendarFromDatabase(), true) })
+        viewModel.dataDownloaded.observe(this,
+            Observer<List<Day>> { it -> it?.let { adapter.update(it, true) } })
     }
 
     override fun setupData() {
         viewModel.downloadCalendars()
         val manager = LinearLayoutManager(requireContext())
-        adapter = CalendarTasksAdapter(manager, emptyList(), viewModel)
+        adapter = CalendarTasksAdapter(manager, viewModel)
         tasks_planing.layoutManager = manager
         tasks_planing.adapter = adapter
     }

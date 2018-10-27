@@ -16,6 +16,8 @@ abstract class BaseHolder<DataType> : RecyclerView.ViewHolder, LayoutContainer {
     val context: Context
         get() = itemView.context
 
+    var dataList: List<DataType> = emptyList()
+
     // used for LayoutContainer
     override val containerView: View?
         get() = itemView

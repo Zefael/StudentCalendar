@@ -28,6 +28,7 @@ abstract class BaseRecyclerAdapter<DataType> (data: List<DataType> = listOf()) :
     override fun onBindViewHolder(holder: BaseHolder<DataType>, position: Int) {
         val item = getItem(position)
         item?.let { holder.bind(it) }
+        holder.dataList = data
         holder.display()
     }
 

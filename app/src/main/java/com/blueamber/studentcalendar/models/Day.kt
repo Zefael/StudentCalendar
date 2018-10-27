@@ -9,9 +9,11 @@ import java.util.*
 
 @Entity
 @Parcelize
-data class Day(val date: Date, val works: List<Work>) : Parcelable {
+data class Day(val date: Date, var works: List<Work>) : Parcelable, Comparable<Day> {
 
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    override fun compareTo(other: Day): Int = date.time.compareTo(other.date.time)
 }

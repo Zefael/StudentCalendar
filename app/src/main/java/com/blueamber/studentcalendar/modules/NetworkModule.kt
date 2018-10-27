@@ -7,7 +7,9 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -20,11 +22,11 @@ class NetworkModule {
 
     @Provides
     fun provideOkHttp(): OkHttpClient {
+
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = if(BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BASIC
-            }
-            else {
+            } else {
                 HttpLoggingInterceptor.Level.NONE
             }
         }
