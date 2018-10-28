@@ -2,6 +2,7 @@ package com.blueamber.studentcalendar.domain.local
 
 import android.arch.persistence.room.*
 import com.blueamber.studentcalendar.models.Day
+import java.util.*
 
 interface BaseDao<T> {
 
@@ -51,6 +52,9 @@ interface DayDao : BaseDao<Day> {
 
     @Query("SELECT * FROM Day")
     fun getDays() : List<Day>
+
+    @Query("SELECT * FROM Day WHERE date > :dateBegin")
+    fun getDaysAfterDate(dateBegin: Date) : List<Day>
 
     @Query("DELETE FROM Day")
     fun deleteDays()

@@ -8,7 +8,6 @@ import com.blueamber.studentcalendar.models.Day
 import com.blueamber.studentcalendar.models.TypeOfSource
 import com.blueamber.studentcalendar.models.Work
 import com.blueamber.studentcalendar.tools.DateUtil
-import java.util.*
 
 class CalendarUseCase(private val remote: NetworkJsonRepository, private val locale: DayDao) {
 
@@ -39,6 +38,7 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
                 result.add(Day(date, works))
                 date = dateNext
                 works = ArrayList()
+                works.add(work)
             }
         }
         return result

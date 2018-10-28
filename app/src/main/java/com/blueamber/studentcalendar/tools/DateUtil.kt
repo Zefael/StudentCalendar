@@ -8,6 +8,12 @@ object DateUtil {
 
     const val PATTERN_DATE = "dd-MM-yyyy"
 
+    fun yesterday(): Date {
+        val result = Calendar.getInstance()
+        result.add(Calendar.DAY_OF_MONTH, -1)
+        return result.time
+    }
+
     fun isToday(date: Long): Boolean {
         val currentDate = Calendar.getInstance()
         currentDate.timeInMillis = date

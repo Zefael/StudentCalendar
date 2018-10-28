@@ -10,9 +10,11 @@ import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
 import com.blueamber.studentcalendar.models.Day
 import com.blueamber.studentcalendar.models.Work
+import com.blueamber.studentcalendar.tools.DateUtil
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
+import java.util.*
 import javax.inject.Inject
 
 class CalendarTasksViewModel @Inject constructor(
@@ -28,8 +30,8 @@ class CalendarTasksViewModel @Inject constructor(
         locale.deleteDays()
         val dataCelcat = CelcatUseCase(remoteXml, locale).downloadCelcat(app)
         val dataOther = CalendarUseCase(remoteJson, locale).downloadJsonCalendar()
-        locale.insert(sortDataDay(dataCelcat, dataOther))
-        val dataDay = locale.getDays()
+        locale.insert(sortDataDay(dataOther, dataCelcat))
+        val dataDay = locale.getDaysAfterDate(DateUtil.yesterday())
         withContext(UI) { dataDownloaded.value = dataDay }
     }
 
