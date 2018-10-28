@@ -1,5 +1,8 @@
 package com.blueamber.studentcalendar.ui.calendartasks
 
+import android.content.Context
+import android.support.v4.content.ContextCompat
+import android.view.View
 import android.view.ViewGroup
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.TypeOfSource
@@ -21,6 +24,7 @@ class EventCalendarTasksAdapter : BaseRecyclerAdapter<Any>() {
                 horaire.text = context.resources.getString(R.string.hours_start_end, it.hourStart, it.hourEnd)
                 lieu.text = it.rooms
                 if (!it.notes.isEmpty()) {
+                    notes.visibility = View.VISIBLE
                     notes.text = context.resources.getString(R.string.notes_event, it.notes)
                 }
 
@@ -28,10 +32,11 @@ class EventCalendarTasksAdapter : BaseRecyclerAdapter<Any>() {
                     "Cours" -> getCardLesson(it.typeOfSource)
                     "TD" -> getCardTD(it.typeOfSource)
                     "Cours+TD" -> getCardLessonAndTD(it.typeOfSource)
+                    "TD machine" -> R.color.red
                     else -> R.color.grey
                 }
 
-                eventCard.setBackgroundColor(color)
+                eventCard.setCardBackgroundColor(ContextCompat.getColor(context, color))
             }
         }
 

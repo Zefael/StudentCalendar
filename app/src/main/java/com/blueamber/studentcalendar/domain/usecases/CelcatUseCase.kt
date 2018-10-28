@@ -71,8 +71,13 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
 
     private fun buildListItemToString(items: List<String>): String {
         var result = ""
-        for (item in items) {
-            result += item + "\n"
+        val it = items.iterator()
+        while (it.hasNext()) {
+            val item = it.next()
+            result += item
+            if (it.hasNext()) {
+                result += "\n"
+            }
         }
         return result
     }
