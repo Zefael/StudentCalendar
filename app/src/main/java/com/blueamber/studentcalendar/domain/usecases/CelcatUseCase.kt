@@ -38,16 +38,17 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
     private fun convert(celcatXmlDto: CelcatXmlDto): List<Day> {
         val result = ArrayList<Day>()
         val sortedCelcat = celcatXmlDto.event.sortedWith(compareBy { it.date })
-        var date = sortedCelcat[0].date
+        var date = DateUtil.addDayToDateString(sortedCelcat[0].date, sortedCelcat[0].day)
         var works: ArrayList<Work> = ArrayList()
 
         for (event in sortedCelcat) {
             val work = buildWork(event)
-            if (date == event.date) {
+            val dateEvent = DateUtil.addDayToDateString(event.date, event.day)
+            if (date == dateEvent) {
                 works.add(work)
             } else {
                 result.add(Day(DateUtil.formatDateSlash(date), works))
-                date = event.date
+                date = dateEvent
                 works = ArrayList()
             }
         }

@@ -6,7 +6,7 @@ import java.util.*
 
 object DateUtil {
 
-    const val PATTERN_DATE = "dd-MM-yyyy"
+    private const val PATTERN_DATE = "dd-MM-yyyy"
 
     fun yesterday(): Date {
         val result = Calendar.getInstance()
@@ -113,5 +113,16 @@ object DateUtil {
         }
     }
 
-
+    fun addDayToDateString(date: String, day: Int): String {
+        return try {
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE)
+            val c = Calendar.getInstance()
+            c.time = sdf.parse(date)
+            c.add(Calendar.DATE, day)
+            sdf.format(c.time)
+        } catch (pE: ParseException) {
+            pE.printStackTrace()
+            date
+        }
+    }
 }
