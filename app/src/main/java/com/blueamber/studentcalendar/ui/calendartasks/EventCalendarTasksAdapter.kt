@@ -1,6 +1,5 @@
 package com.blueamber.studentcalendar.ui.calendartasks
 
-import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,7 @@ class EventCalendarTasksAdapter : BaseRecyclerAdapter<Any>() {
                 modules.text = it.titre.split("\n")[0]
                 horaire.text = context.resources.getString(R.string.hours_start_end, it.hourStart, it.hourEnd)
                 lieu.text = it.rooms
+                groups.text = it.group
                 if (!it.notes.isEmpty()) {
                     notes.visibility = View.VISIBLE
                     notes.text = context.resources.getString(R.string.notes_event, it.notes)
