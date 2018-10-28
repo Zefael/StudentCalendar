@@ -25,6 +25,7 @@ class CalendarTasksViewModel @Inject constructor(
 ) : ViewModel() {
 
     val dataDownloaded = MutableLiveData<List<Day>>()
+    val titleToolBar = MutableLiveData<String>()
 
     fun downloadCalendars() = launch {
         locale.deleteDays()
@@ -58,6 +59,6 @@ class CalendarTasksViewModel @Inject constructor(
     }
 
     fun setToolbarTitle(title: String) {
-
+        titleToolBar.value = title
     }
 }

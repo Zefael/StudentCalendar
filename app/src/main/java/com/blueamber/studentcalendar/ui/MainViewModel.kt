@@ -11,6 +11,7 @@ class MainViewModel : ViewModel() {
 
     val navigation = ActionLiveData<NavigationState>()
     val statusBarColor = MutableLiveData<Int>()
+    val statusBarTitle = MutableLiveData<String>()
 
     fun back() {
         navigation.value = Back
@@ -24,4 +25,7 @@ class MainViewModel : ViewModel() {
         statusBarColor.value = color
     }
 
+    fun setStatusBarTitle(title: String) {
+        statusBarTitle.value = title
+    }
 }

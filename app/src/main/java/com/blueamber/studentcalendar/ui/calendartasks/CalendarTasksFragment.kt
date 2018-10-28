@@ -36,6 +36,8 @@ class CalendarTasksFragment : NavigationFragment() {
     override fun setupObservers() {
         viewModel.dataDownloaded.observe(this,
             Observer<List<Day>> { it -> it?.let { adapter.update(it, true) } })
+        viewModel.titleToolBar.observe(this,
+            Observer { it -> it?.let { applyStatusBarTitle(it) } })
     }
 
     override fun setupData() {

@@ -30,6 +30,8 @@ abstract class NavigationFragment : BaseFragment(), Injectable {
         color?.let { mainViewModel.setStatusBarColor(it) }
     }
 
+    fun applyStatusBarTitle(title: String) = mainViewModel.setStatusBarTitle(title)
+
     fun applyOrientation(orientation : Int) {
         activity?.let { it.requestedOrientation = orientation }
     }
