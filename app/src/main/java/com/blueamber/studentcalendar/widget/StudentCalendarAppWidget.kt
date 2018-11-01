@@ -33,10 +33,11 @@ class StudentCalendarAppWidget : AppWidgetProvider() {
             val updateViews = buildUpdate(this)
             val thisWidget = ComponentName(this, StudentCalendarAppWidget::class.java)
             val manager = AppWidgetManager.getInstance(this)
+
             manager.updateAppWidget(thisWidget, updateViews)
         }
 
-        fun buildUpdate(context: Context): RemoteViews {
+        private fun buildUpdate(context: Context): RemoteViews {
             val views = RemoteViews(context.packageName, R.layout.student_calendar_app_widget)
             return views
         }
