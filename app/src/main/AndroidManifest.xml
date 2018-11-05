@@ -27,6 +27,9 @@
             </intent-filter>
         </activity>
 
+        <provider android:name=".domain.local.StudentCalendarProvider"
+                  android:authorities="com.blueamber.studentcalendar.provider"/>
+
         <receiver android:name=".widget.StudentCalendarAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

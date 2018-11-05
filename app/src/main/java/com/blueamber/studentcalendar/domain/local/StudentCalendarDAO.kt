@@ -3,6 +3,9 @@ package com.blueamber.studentcalendar.domain.local
 import android.arch.persistence.room.*
 import com.blueamber.studentcalendar.models.Day
 import java.util.*
+import android.arch.persistence.room.RoomMasterTable.TABLE_NAME
+import android.database.Cursor
+
 
 interface BaseDao<T> {
 
@@ -58,4 +61,9 @@ interface DayDao : BaseDao<Day> {
 
     @Query("DELETE FROM Day")
     fun deleteDays()
+
+    // ** Special content provider ** //
+
+    @Query("SELECT * FROM Day WHERE date > :dateBegin")
+    fun selectAllBeginToday(dateBegin: Date): Cursor
 }

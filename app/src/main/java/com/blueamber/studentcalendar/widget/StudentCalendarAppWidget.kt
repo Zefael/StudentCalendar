@@ -4,11 +4,15 @@ import android.app.Service
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.IBinder
+import android.provider.UserDictionary
 import android.widget.RemoteViews
 import com.blueamber.studentcalendar.R
+import java.net.URI
 
 
 class StudentCalendarAppWidget : AppWidgetProvider() {
@@ -38,6 +42,7 @@ class StudentCalendarAppWidget : AppWidgetProvider() {
         }
 
         private fun buildUpdate(context: Context): RemoteViews {
+
             val views = RemoteViews(context.packageName, R.layout.student_calendar_app_widget)
             return views
         }
