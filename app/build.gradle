@@ -105,6 +105,9 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$versions.room"
     kapt "android.arch.persistence.room:compiler:$versions.room"
 
+    // GSON
+    implementation "com.google.code.gson:gson:$versions.gson"
+
     // tests
     testImplementation "junit:junit:4.12"
     androidTestImplementation "com.android.support.test:runner:$versions.runner"

@@ -7,6 +7,8 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
 import com.blueamber.studentcalendar.tools.DateUtil
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 
 private const val DBNAME = "student_calendar_db"
 
@@ -20,14 +22,18 @@ class StudentCalendarProvider : ContentProvider() {
     }
 
 
-    override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?,
-        sortOrder: String?): Cursor? {
-        val cursor: Cursor?
-        when (uriMatcher.match(uri)) {
-            1 -> {
-                cursor = dayDao?.selectAllBeginToday(DateUtil.yesterday())
+    override fun query(
+        uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?,
+        sortOrder: String?
+    ): Cursor? {
+        var cursor: Cursor? = null
+        launch {
+            when (uriMatcher.match(uri)) {
+                1 -> {
+                    async { cursor = dayDao?.selectAllBeginToday(DateUtil.yesterday()) }.await()
+                }
+                else -> throw IllegalArgumentException("Unknown URI : $uri")
             }
-            else -> throw IllegalArgumentException("Unknown URI: $uri")
         }
         cursor?.setNotificationUri(context.contentResolver, uri)
         return cursor
