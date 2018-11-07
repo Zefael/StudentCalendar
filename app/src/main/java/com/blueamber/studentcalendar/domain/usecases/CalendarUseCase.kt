@@ -1,17 +1,16 @@
 package com.blueamber.studentcalendar.domain.usecases
 
 import android.util.Log
-import com.blueamber.studentcalendar.domain.local.DayDao
+import com.blueamber.studentcalendar.domain.local.TastsCalendarDao
 import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.calendarjson.CalendarJsonDto
-import com.blueamber.studentcalendar.models.Day
+import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.models.TypeOfSource
-import com.blueamber.studentcalendar.models.Work
 import com.blueamber.studentcalendar.tools.DateUtil
 
-class CalendarUseCase(private val remote: NetworkJsonRepository, private val locale: DayDao) {
+class CalendarUseCase(private val remote: NetworkJsonRepository, private val locale: TastsCalendarDao) {
 
-    suspend fun downloadJsonCalendar(): List<Day> {
+    suspend fun downloadJsonCalendar(): List<TasksCalendar> {
         return try {
             val request = remote.getCalendar()
             val response = request.await()
@@ -19,42 +18,34 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
                 convert(response.body() ?: emptyMap())
             } else emptyList()
         } catch (exception: Exception) {
-            Log.e(CalendarUseCase::class.java.simpleName, "Failed: download calendar json file and insert in database", exception)
+            Log.e(
+                CalendarUseCase::class.java.simpleName,
+                "Failed: download calendar json file and insert in database",
+                exception
+            )
             emptyList()
         }
     }
 
-    private fun convert(data: Map<String, CalendarJsonDto>) : List<Day> {
-        val result = ArrayList<Day>()
-        var date = DateUtil.formatDateDashT(data.values.elementAt(0).date_start)
-        var works: ArrayList<Work> = ArrayList()
+    private fun convert(data: Map<String, CalendarJsonDto>): List<TasksCalendar> {
+        val result = ArrayList<TasksCalendar>()
 
-        data.forEach{ (_, item) ->
-            val work = buildWork(item)
-            val dateNext = DateUtil.formatDateDashT(item.date_start)
-            if (date == dateNext) {
-                works.add(work)
-            } else {
-                result.add(Day(date, works))
-                date = dateNext
-                works = ArrayList()
-                works.add(work)
-            }
+        data.forEach { (_, item) ->
+            result.add(
+                TasksCalendar(
+                    DateUtil.formatDateDashT(item.date_start),
+                    item.acronym.substringAfter("::"),
+                    item.type,
+                    TypeOfSource.OTHER,
+                    item.date_start.substringAfter("T"),
+                    item.date_end.substringAfter("T"),
+                    item.lecturer,
+                    item.location.substringAfter("::"),
+                    item.group,
+                    if (item.comment.contains("Imported")) "" else (item.comment)
+                )
+            )
         }
         return result
-    }
-
-    private fun buildWork(calendarJsonDto: CalendarJsonDto): Work {
-        return Work(
-            calendarJsonDto.acronym.substringAfter("::"),
-            calendarJsonDto.type,
-            TypeOfSource.OTHER,
-            calendarJsonDto.date_start.substringAfter("T"),
-            calendarJsonDto.date_end.substringAfter("T"),
-            calendarJsonDto.lecturer,
-            calendarJsonDto.location.substringAfter("::"),
-            calendarJsonDto.group,
-            if (calendarJsonDto.comment.contains("Imported"))  "" else (calendarJsonDto.comment)
-        )
     }
 }

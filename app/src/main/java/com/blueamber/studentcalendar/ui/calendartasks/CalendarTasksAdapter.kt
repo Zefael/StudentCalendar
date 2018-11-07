@@ -4,7 +4,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
 import com.blueamber.studentcalendar.R
-import com.blueamber.studentcalendar.models.Day
+import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.ui.base.recycler.BaseHolder
 import com.blueamber.studentcalendar.ui.base.recycler.BaseRecyclerAdapter
@@ -13,9 +13,9 @@ import kotlinx.android.synthetic.main.item_tasks_by_day.*
 class CalendarTasksAdapter(
     private val layoutManager: LinearLayoutManager,
     private val calendarTasksViewModel: CalendarTasksViewModel
-) : BaseRecyclerAdapter<Day>() {
+) : BaseRecyclerAdapter<TasksCalendar>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHolder<Day> =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHolder<TasksCalendar> =
         DayHolder(layoutManager, parent, calendarTasksViewModel)
 
 
@@ -23,7 +23,7 @@ class CalendarTasksAdapter(
         private val layoutManager: LinearLayoutManager,
         parent: ViewGroup,
         private val viewModel: CalendarTasksViewModel
-    ) : BaseHolder<Day>(parent, R.layout.item_tasks_by_day) {
+    ) : BaseHolder<TasksCalendar>(parent, R.layout.item_tasks_by_day) {
 
         override fun display() {
             // Set recycler

@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.TypeOfSource
-import com.blueamber.studentcalendar.models.Work
 import com.blueamber.studentcalendar.ui.base.recycler.BaseHolder
 import com.blueamber.studentcalendar.ui.base.recycler.BaseRecyclerAdapter
 import kotlinx.android.synthetic.main.event_card.*

@@ -1,7 +1,7 @@
 package com.blueamber.studentcalendar.domain.local
 
 import android.arch.persistence.room.TypeConverter
-import com.blueamber.studentcalendar.models.Work
+import com.blueamber.studentcalendar.models.TasksCalendar
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -20,20 +20,20 @@ class DaoConverters {
     }
 
     @TypeConverter
-    fun fromJsonToWork(json: String): List<Work> {
+    fun fromJsonToWork(json: String): List<TasksCalendar> {
         val moshi = Moshi.Builder().build()
-        val type = Types.newParameterizedType(List::class.java, Work::class.java)
-        val adapter : JsonAdapter<List<Work>> = moshi.adapter(type)
+        val type = Types.newParameterizedType(List::class.java, TasksCalendar::class.java)
+        val adapter : JsonAdapter<List<TasksCalendar>> = moshi.adapter(type)
 
         return adapter.fromJson(json) ?: emptyList()
     }
 
     @TypeConverter
-    fun fromWorkToJson(works: List<Work>): String {
+    fun fromWorkToJson(tasks: List<TasksCalendar>): String {
         val moshi = Moshi.Builder().build()
-        val type = Types.newParameterizedType(List::class.java, Work::class.java)
-        val adapter : JsonAdapter<List<Work>> = moshi.adapter(type)
+        val type = Types.newParameterizedType(List::class.java, TasksCalendar::class.java)
+        val adapter : JsonAdapter<List<TasksCalendar>> = moshi.adapter(type)
 
-        return adapter.toJson(works) ?: ""
+        return adapter.toJson(tasks) ?: ""
     }
 }

@@ -2,20 +2,18 @@ package com.blueamber.studentcalendar.domain.usecases
 
 import android.content.Context
 import android.util.Log
-import com.blueamber.studentcalendar.domain.local.DayDao
+import com.blueamber.studentcalendar.domain.local.TastsCalendarDao
 import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.CelcatXmlDto
-import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.EventDto
-import com.blueamber.studentcalendar.models.Day
+import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.models.TypeOfSource
-import com.blueamber.studentcalendar.models.Work
 import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.tools.FileUtil
 import org.simpleframework.xml.core.Persister
 
-class CelcatUseCase(private val remote: NetworkXmlRepository, private val local: DayDao) {
+class CelcatUseCase(private val remote: NetworkXmlRepository, private val local: TastsCalendarDao) {
 
-    suspend fun downloadCelcat(context: Context): List<Day> {
+    suspend fun downloadCelcat(context: Context): List<TasksCalendar> {
         return try {
             val request = remote.getCelcat()
             val response = request.await()
@@ -28,45 +26,33 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
         } catch (exception: Exception) {
             Log.e(
                 CelcatUseCase::class.java.simpleName,
-                "Failed : download Celcat xml file and insert in database",
-                exception
+                "Failed : download Celcat xml file and insert in database", exception
             )
             emptyList()
         }
     }
 
-    private fun convert(celcatXmlDto: CelcatXmlDto): List<Day> {
-        val result = ArrayList<Day>()
+    private fun convert(celcatXmlDto: CelcatXmlDto): List<TasksCalendar> {
+        val result = ArrayList<TasksCalendar>()
         val sortedCelcat = celcatXmlDto.event.sortedWith(compareBy { it.date })
-        var date = DateUtil.addDayToDateString(sortedCelcat[0].date, sortedCelcat[0].day)
-        var works: ArrayList<Work> = ArrayList()
 
         for (event in sortedCelcat) {
-            val work = buildWork(event)
-            val dateEvent = DateUtil.addDayToDateString(event.date, event.day)
-            if (date == dateEvent) {
-                works.add(work)
-            } else {
-                result.add(Day(DateUtil.formatDateSlash(date), works))
-                date = dateEvent
-                works = ArrayList()
-            }
+            result.add(
+                TasksCalendar(
+                    DateUtil.formatDateSlash(DateUtil.addDayToDateString(event.date, event.day)),
+                    buildListItemToString(event.resources.modules),
+                    event.category,
+                    TypeOfSource.CELCAT,
+                    event.startTime,
+                    event.endTime,
+                    buildListItemToString(event.resources.staffs),
+                    buildListItemToString(event.resources.rooms),
+                    buildListItemToString(event.resources.groups),
+                    event.notes
+                )
+            )
         }
         return result
-    }
-
-    private fun buildWork(eventDto: EventDto): Work {
-        return Work(
-            buildListItemToString(eventDto.resources.modules),
-            eventDto.category,
-            TypeOfSource.CELCAT,
-            eventDto.startTime,
-            eventDto.endTime,
-            buildListItemToString(eventDto.resources.staffs),
-            buildListItemToString(eventDto.resources.rooms),
-            buildListItemToString(eventDto.resources.groups),
-            eventDto.notes
-        )
     }
 
     private fun buildListItemToString(items: List<String>): String {

@@ -8,8 +8,7 @@ import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
 import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
-import com.blueamber.studentcalendar.models.Day
-import com.blueamber.studentcalendar.models.Work
+import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.tools.DateUtil
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -24,7 +23,7 @@ class CalendarTasksViewModel @Inject constructor(
     private val locale: DayDao
 ) : ViewModel() {
 
-    val dataDownloaded = MutableLiveData<List<Day>>()
+    val dataDownloaded = MutableLiveData<List<TasksCalendar>>()
     val titleToolBar = MutableLiveData<String>()
 
     fun downloadCalendars() = launch {
@@ -36,8 +35,8 @@ class CalendarTasksViewModel @Inject constructor(
         withContext(UI) { dataDownloaded.value = dataDay }
     }
 
-    private fun sortDataDay(data1: List<Day>, data2: List<Day>): List<Day> {
-        val result = ArrayList<Day>()
+    private fun sortDataDay(data1: List<TasksCalendar>, data2: List<TasksCalendar>): List<TasksCalendar> {
+        val result = ArrayList<TasksCalendar>()
         result.addAll(data1)
         data2.forEach { it2 ->
             var isAdded = false

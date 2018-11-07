@@ -1,10 +1,9 @@
 package com.blueamber.studentcalendar.domain.local
 
 import android.arch.persistence.room.*
-import com.blueamber.studentcalendar.models.Day
-import java.util.*
-import android.arch.persistence.room.RoomMasterTable.TABLE_NAME
 import android.database.Cursor
+import com.blueamber.studentcalendar.models.TasksCalendar
+import java.util.*
 
 
 interface BaseDao<T> {
@@ -51,22 +50,22 @@ interface BaseDao<T> {
 }
 
 @Dao
-interface DayDao : BaseDao<Day> {
+interface TastsCalendarDao : BaseDao<TasksCalendar> {
 
-    @Query("SELECT * FROM Day")
-    fun getDays() : List<Day>
+    @Query("SELECT * FROM TasksCalendar")
+    fun getDays(): List<TasksCalendar>
 
-    @Query("SELECT * FROM Day WHERE date > :dateBegin")
-    fun getDaysAfterDate(dateBegin: Date) : List<Day>
+    @Query("SELECT * FROM TasksCalendar WHERE date > :dateBegin")
+    fun getDaysAfterDate(dateBegin: Date): List<TasksCalendar>
 
-    @Query("DELETE FROM Day")
+    @Query("DELETE FROM TasksCalendar")
     fun deleteDays()
 
     // ** Special content provider ** //
 
-    @Query("SELECT * FROM Day WHERE date > :dateBegin")
+    @Query("SELECT * FROM TasksCalendar WHERE date > :dateBegin")
     fun selectAllBeginToday(dateBegin: Date): Cursor
 
-    @Query("SELECT COUNT(*) FROM Day")
+    @Query("SELECT COUNT(*) FROM TasksCalendar")
     fun countDayWithData(): Cursor
 }
