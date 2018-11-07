@@ -8,7 +8,7 @@ import android.database.Cursor
 import android.net.Uri
 import com.blueamber.studentcalendar.tools.DateUtil
 import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 
 private const val DBNAME = "student_calendar_db"
 
@@ -19,6 +19,7 @@ class StudentCalendarProvider : ContentProvider() {
 
     private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
         addURI("com.blueamber.studentcalendar.provider", "eventcalendar", 1)
+        addURI("com.blueamber.studentcalendar.provider", "count", 2)
     }
 
 
@@ -27,12 +28,14 @@ class StudentCalendarProvider : ContentProvider() {
         sortOrder: String?
     ): Cursor? {
         var cursor: Cursor? = null
-        launch {
+        runBlocking {
             when (uriMatcher.match(uri)) {
                 1 -> {
                     async { cursor = dayDao?.selectAllBeginToday(DateUtil.yesterday()) }.await()
                 }
-                else -> throw IllegalArgumentException("Unknown URI : $uri")
+                2-> {
+                    async { cursor = dayDao?.countDayWithData() }.await()
+                }
             }
         }
         cursor?.setNotificationUri(context.contentResolver, uri)

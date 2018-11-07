@@ -66,4 +66,7 @@ interface DayDao : BaseDao<Day> {
 
     @Query("SELECT * FROM Day WHERE date > :dateBegin")
     fun selectAllBeginToday(dateBegin: Date): Cursor
+
+    @Query("SELECT COUNT(*) FROM Day")
+    fun countDayWithData(): Cursor
 }
