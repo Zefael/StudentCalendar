@@ -9,6 +9,6 @@ import com.blueamber.studentcalendar.models.TasksCalendar
 @TypeConverters(DaoConverters::class)
 abstract class StudentCalendarDatabase : RoomDatabase() {
 
-    abstract fun tasksCalendarDao() : TastsCalendarDao
+    abstract fun tasksCalendarDao() : TasksCalendarDao
 
 }

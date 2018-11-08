@@ -6,6 +6,7 @@ import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
+import android.util.Log
 import com.blueamber.studentcalendar.tools.DateUtil
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.runBlocking
@@ -15,36 +16,38 @@ private const val DBNAME = "student_calendar_db"
 class StudentCalendarProvider : ContentProvider() {
 
     private lateinit var appDatabase: StudentCalendarDatabase
-    private var dayDao: DayDao? = null
+    private var tasksDao: TasksCalendarDao? = null
 
     private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
         addURI("com.blueamber.studentcalendar.provider", "eventcalendar", 1)
         addURI("com.blueamber.studentcalendar.provider", "count", 2)
     }
 
-
     override fun query(
         uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?,
         sortOrder: String?
     ): Cursor? {
         var cursor: Cursor? = null
+        Log.d("StudentCalendarProvider", "query before runBlocking")
         runBlocking {
-            when (uriMatcher.match(uri)) {
-                1 -> {
-                    async { cursor = dayDao?.selectAllBeginToday(DateUtil.yesterday()) }.await()
+            Log.d("StudentCalendarProvider", "query runBlocking")
+            async {
+                Log.d("StudentCalendarProvider", "query a   sync")
+                when (uriMatcher.match(uri)) {
+                    1 -> {
+                        cursor = tasksDao?.selectAllBeginToday(DateUtil.yesterday())
+                    }
                 }
-                2-> {
-                    async { cursor = dayDao?.countDayWithData() }.await()
-                }
-            }
+            }.await()
         }
+        Log.d("StudentCalendarProvider", "query after runBlocking")
         cursor?.setNotificationUri(context.contentResolver, uri)
         return cursor
     }
 
     override fun onCreate(): Boolean {
         appDatabase = Room.databaseBuilder(context, StudentCalendarDatabase::class.java, DBNAME).build()
-        dayDao = appDatabase.dayDao()
+        tasksDao = appDatabase.tasksCalendarDao()
         return true
     }
 

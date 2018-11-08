@@ -2,8 +2,8 @@ package com.blueamber.studentcalendar.modules
 
 import android.arch.persistence.room.Room
 import android.content.Context
-import com.blueamber.studentcalendar.domain.local.DayDao
 import com.blueamber.studentcalendar.domain.local.StudentCalendarDatabase
+import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,7 +13,7 @@ class DaoModule {
 
     @Singleton
     @Provides
-    fun provideMondialDatabase(context: Context): StudentCalendarDatabase {
+    fun provideStudentCalendarDatabase(context: Context): StudentCalendarDatabase {
         return Room
             .databaseBuilder(context, StudentCalendarDatabase::class.java, "student_calendar_db")
             .fallbackToDestructiveMigration()
@@ -22,7 +22,7 @@ class DaoModule {
 
     @Singleton
     @Provides
-    fun provideDayDao(studentCalendarDatabase: StudentCalendarDatabase): DayDao {
-        return studentCalendarDatabase.dayDao()
+    fun provideTasksDao(studentCalendarDatabase: StudentCalendarDatabase): TasksCalendarDao {
+        return studentCalendarDatabase.tasksCalendarDao()
     }
 }

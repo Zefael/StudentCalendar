@@ -2,7 +2,7 @@ package com.blueamber.studentcalendar.domain.usecases
 
 import android.content.Context
 import android.util.Log
-import com.blueamber.studentcalendar.domain.local.TastsCalendarDao
+import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
 import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.CelcatXmlDto
 import com.blueamber.studentcalendar.models.TasksCalendar
@@ -11,7 +11,7 @@ import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.tools.FileUtil
 import org.simpleframework.xml.core.Persister
 
-class CelcatUseCase(private val remote: NetworkXmlRepository, private val local: TastsCalendarDao) {
+class CelcatUseCase(private val remote: NetworkXmlRepository, private val local: TasksCalendarDao) {
 
     suspend fun downloadCelcat(context: Context): List<TasksCalendar> {
         return try {

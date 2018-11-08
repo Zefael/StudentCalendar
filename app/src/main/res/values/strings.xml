@@ -7,6 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Préférences</string>
     <string name="hours_start_end">%s - %s</string>
+    <string name="date_event">%s\n%s</string>
     <string name="notes_event">note(s) : %s</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>

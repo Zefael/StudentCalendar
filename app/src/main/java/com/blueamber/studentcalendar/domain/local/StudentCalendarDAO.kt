@@ -50,16 +50,16 @@ interface BaseDao<T> {
 }
 
 @Dao
-interface TastsCalendarDao : BaseDao<TasksCalendar> {
+interface TasksCalendarDao : BaseDao<TasksCalendar> {
 
     @Query("SELECT * FROM TasksCalendar")
-    fun getDays(): List<TasksCalendar>
+    fun getTasks(): List<TasksCalendar>
 
     @Query("SELECT * FROM TasksCalendar WHERE date > :dateBegin")
-    fun getDaysAfterDate(dateBegin: Date): List<TasksCalendar>
+    fun getTasksAfterDate(dateBegin: Date): List<TasksCalendar>
 
     @Query("DELETE FROM TasksCalendar")
-    fun deleteDays()
+    fun deleteTasks()
 
     // ** Special content provider ** //
 
@@ -67,5 +67,5 @@ interface TastsCalendarDao : BaseDao<TasksCalendar> {
     fun selectAllBeginToday(dateBegin: Date): Cursor
 
     @Query("SELECT COUNT(*) FROM TasksCalendar")
-    fun countDayWithData(): Cursor
+    fun countTasksWithData(): Cursor
 }

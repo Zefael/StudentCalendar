@@ -27,9 +27,11 @@
             </intent-filter>
         </activity>
 
-        <provider android:name=".domain.local.StudentCalendarProvider"
-                  android:authorities="com.blueamber.studentcalendar.provider"
-                  android:exported="true"/>
+        <provider
+                android:name=".domain.local.StudentCalendarProvider"
+                android:authorities="com.blueamber.studentcalendar.provider"
+                android:enabled="true"
+                android:exported="true"/>
 
         <receiver android:name=".widget.StudentCalendarAppWidget">
             <intent-filter>
@@ -42,10 +44,9 @@
         </receiver>
 
         <service android:name=".widget.StudentCalendarAppWidget$UpdateService"/>
-
-        <service android:name=".widget.StudentCalendarWidgetService"
-                 android:permission="android.permission.BIND_REMOTEVIEWS"
-                 android:exported="false"/>
-
+        <service
+                android:name=".widget.StudentCalendarWidgetService"
+                android:exported="false"
+                android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 </manifest>
