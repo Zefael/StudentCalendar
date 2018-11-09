@@ -70,12 +70,17 @@ class StudentCalendarWidgetFactory(val context: Context, val intent: Intent?) : 
 
         dateBefore = dateActual
 
-        cursor?.moveToPosition(position +1)
-        val dateAfter = Date(cursor?.getString(cursor?.getColumnIndex("date") ?: 0)?.toLong() ?: 0)
-        if (position < (cursor?.count ?:0) && DateUtil.isEqualsDate(dateAfter.time, dateActual.time)) {
-            remoteViews.setInt(R.id.simple_separation, "setBackgroundResource", 0)
-        } else {
-            remoteViews.setInt(R.id.simple_separation, "setBackgroundResource", R.drawable.background_white_bottom_border_grey)
+        if (position < (cursor?.count ?:0) -1) {
+            cursor?.moveToPosition(position + 1)
+            val dateAfter = Date(cursor?.getString(cursor?.getColumnIndex("date") ?: 0)?.toLong() ?: 0)
+            if (DateUtil.isEqualsDate(dateAfter.time, dateActual.time)) {
+                remoteViews.setInt(R.id.simple_separation, "setBackgroundResource", 0)
+            } else {
+                remoteViews.setInt(
+                    R.id.simple_separation,
+                    "setBackgroundResource",
+                    R.drawable.background_white_bottom_border_grey)
+            }
         }
 
         return remoteViews

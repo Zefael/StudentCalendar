@@ -46,18 +46,21 @@
                         android:id="@+id/item_card_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:textColor="@android:color/white"/>
 
                 <TextView
                         android:id="@+id/item_card_place"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="end"
                         android:textColor="@android:color/white"/>
 
                 <TextView
                         android:id="@+id/item_card_groups"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textStyle="italic"
                         android:textColor="@android:color/white"/>
 
             </LinearLayout>

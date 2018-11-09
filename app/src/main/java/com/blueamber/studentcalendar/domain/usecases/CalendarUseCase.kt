@@ -31,6 +31,8 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
         val result = ArrayList<TasksCalendar>()
 
         data.forEach { (_, item) ->
+            val group = item.group.replace(";", "")
+            group.replace(" ", "")
             result.add(
                 TasksCalendar(
                     DateUtil.formatDateDashT(item.date_start),
@@ -40,8 +42,8 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
                     item.date_start.substringAfter("T"),
                     item.date_end.substringAfter("T"),
                     item.lecturer,
-                    item.location.substringAfter("::"),
-                    item.group,
+                    item.location.substringAfter("::").replace("@", "/"),
+                    group,
                     if (item.comment.contains("Imported")) "" else (item.comment)
                 )
             )
