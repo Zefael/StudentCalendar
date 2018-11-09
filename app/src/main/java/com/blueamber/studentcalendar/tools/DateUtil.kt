@@ -45,6 +45,18 @@ object DateUtil {
         return c1.get(Calendar.DAY_OF_YEAR) - c2.get(Calendar.DAY_OF_YEAR)
     }
 
+    fun isEqualsDate(d1: Long, d2: Long): Boolean {
+        val c1 = Calendar.getInstance()
+        c1.timeInMillis = d1
+
+        val c2 = Calendar.getInstance()
+        c2.timeInMillis = d2
+
+        return (c1.get(Calendar.DAY_OF_YEAR) == c2.get(Calendar.DAY_OF_YEAR) &&
+                c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH) &&
+                c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR))
+    }
+
     fun monthOfDate(date: Long): String {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = date
@@ -71,13 +83,13 @@ object DateUtil {
         calendar.timeInMillis = date
 
         return when (calendar.get(Calendar.DAY_OF_WEEK)) {
-            Calendar.MONDAY -> "lun."
-            Calendar.TUESDAY -> "mar."
-            Calendar.WEDNESDAY -> "mer."
-            Calendar.THURSDAY -> "jeu."
-            Calendar.FRIDAY -> "ven."
-            Calendar.SATURDAY -> "sam."
-            Calendar.SUNDAY -> "dim."
+            Calendar.MONDAY -> "lun"
+            Calendar.TUESDAY -> "mar"
+            Calendar.WEDNESDAY -> "mer"
+            Calendar.THURSDAY -> "jeu"
+            Calendar.FRIDAY -> "ven"
+            Calendar.SATURDAY -> "sam"
+            Calendar.SUNDAY -> "dim"
             else -> ""
         }
     }

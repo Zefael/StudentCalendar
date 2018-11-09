@@ -6,41 +6,61 @@
         android:layout_height="wrap_content">
 
     <LinearLayout
+            android:id="@+id/simple_separation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/background_white_bottom_border_grey"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="5dp">
 
         <TextView
                 android:id="@+id/item_event_date"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"/>
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="5dp"
                 android:background="@color/blue">
 
             <TextView
-                    android:id="@+id/item_card_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
                     android:id="@+id/item_card_hours_place"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:textColor="@android:color/white"/>
 
-            <TextView
-                    android:id="@+id/item_card_place"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:orientation="vertical">
 
-            <TextView
-                    android:id="@+id/item_card_groups"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/item_card_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"/>
+
+                <TextView
+                        android:id="@+id/item_card_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"/>
+
+                <TextView
+                        android:id="@+id/item_card_groups"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

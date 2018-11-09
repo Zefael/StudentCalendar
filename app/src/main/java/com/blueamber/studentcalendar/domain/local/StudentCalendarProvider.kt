@@ -20,7 +20,6 @@ class StudentCalendarProvider : ContentProvider() {
 
     private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
         addURI("com.blueamber.studentcalendar.provider", "eventcalendar", 1)
-        addURI("com.blueamber.studentcalendar.provider", "count", 2)
     }
 
     override fun query(
@@ -28,11 +27,8 @@ class StudentCalendarProvider : ContentProvider() {
         sortOrder: String?
     ): Cursor? {
         var cursor: Cursor? = null
-        Log.d("StudentCalendarProvider", "query before runBlocking")
         runBlocking {
-            Log.d("StudentCalendarProvider", "query runBlocking")
             async {
-                Log.d("StudentCalendarProvider", "query a   sync")
                 when (uriMatcher.match(uri)) {
                     1 -> {
                         cursor = tasksDao?.selectAllBeginToday(DateUtil.yesterday())
@@ -40,7 +36,6 @@ class StudentCalendarProvider : ContentProvider() {
                 }
             }.await()
         }
-        Log.d("StudentCalendarProvider", "query after runBlocking")
         cursor?.setNotificationUri(context.contentResolver, uri)
         return cursor
     }

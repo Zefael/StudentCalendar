@@ -36,12 +36,16 @@ class CalendarTasksAdapter(
                 }
                 simple_separation.visibility = View.VISIBLE
                 month_separation.visibility = View.GONE
+                event_date.visibility = View.VISIBLE
                 // Set item
-                event_date.text = context.getString(
+                event_date.text =  context.getString(
                     R.string.date_event,
                     DateUtil.dayOfMonth(it.date.time).toString(),
-                    DateUtil.dayOfWeek(it.date.time)
-                )
+                    DateUtil.dayOfWeek(it.date.time))
+
+                if (layoutPosition-1 >= 0 && DateUtil.isEqualsDate(it.date.time, dataList[layoutPosition - 1].date.time)) {
+                    event_date.visibility = View.INVISIBLE
+                }
 
                 profs.text = it.professors
                 modules.text = it.titre.split("\n")[0]
@@ -72,6 +76,8 @@ class CalendarTasksAdapter(
                         simple_separation.visibility = View.GONE
                         month_separation.visibility = View.VISIBLE
                         month.text = nextMonth
+                    } else if (DateUtil.isEqualsDate(it.date.time, dataList[layoutPosition + 1].date.time)) {
+                        simple_separation.visibility = View.GONE
                     }
                 } else {
                     simple_separation.visibility = View.GONE
