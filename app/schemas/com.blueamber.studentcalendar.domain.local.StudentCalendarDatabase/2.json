@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "744fd067fa2becab7545aa5331407c5e",
+    "identityHash": "ced294ed9b6b40fd93a4080f341883c1",
     "entities": [
       {
         "tableName": "TasksCalendar",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER NOT NULL, `titre` TEXT NOT NULL, `type` TEXT NOT NULL, `typeOfSource` TEXT NOT NULL, `hourStart` TEXT NOT NULL, `hourEnd` TEXT NOT NULL, `professors` TEXT NOT NULL, `rooms` TEXT NOT NULL, `group` TEXT NOT NULL, `notes` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER NOT NULL, `titre` TEXT NOT NULL, `type` TEXT NOT NULL, `typeOfSource` TEXT NOT NULL, `colorTask` INTEGER NOT NULL, `hourStart` TEXT NOT NULL, `hourEnd` TEXT NOT NULL, `professors` TEXT NOT NULL, `rooms` TEXT NOT NULL, `group` TEXT NOT NULL, `notes` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -36,6 +36,12 @@
             "fieldPath": "typeOfSource",
             "columnName": "typeOfSource",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colorTask",
+            "columnName": "colorTask",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -87,7 +93,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"744fd067fa2becab7545aa5331407c5e\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ced294ed9b6b40fd93a4080f341883c1\")"
     ]
   }
 }

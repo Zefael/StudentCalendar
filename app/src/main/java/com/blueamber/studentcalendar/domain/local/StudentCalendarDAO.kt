@@ -63,8 +63,8 @@ interface TasksCalendarDao : BaseDao<TasksCalendar> {
 
     // ** Special content provider ** //
 
-    @Query("SELECT * FROM TasksCalendar WHERE date > :dateBegin")
-    fun selectAllBeginToday(dateBegin: Date): Cursor
+    @Query("SELECT * FROM TasksCalendar WHERE date > :dateBegin AND date < :dateEnd")
+    fun selectAllBeginTodayForTwoWeek(dateBegin: Date, dateEnd: Date): Cursor
 
     @Query("SELECT COUNT(*) FROM TasksCalendar")
     fun countTasksWithData(): Cursor

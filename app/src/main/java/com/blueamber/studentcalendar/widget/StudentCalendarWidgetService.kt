@@ -67,6 +67,7 @@ class StudentCalendarWidgetFactory(val context: Context, val intent: Intent?) : 
             cursor?.getString(cursor?.getColumnIndex("hourEnd") ?: 0)))
         remoteViews.setTextViewText(R.id.item_card_place, cursor?.getString(cursor?.getColumnIndex("rooms") ?: 0))
         remoteViews.setTextViewText(R.id.item_card_groups, cursor?.getString(cursor?.getColumnIndex("group") ?: 0))
+        remoteViews.setInt(R.id.widget_card, "setBackgroundResource", cursor?.getInt(cursor?.getColumnIndex("colorTask") ?: 0) ?: R.color.grey)
 
         dateBefore = dateActual
 

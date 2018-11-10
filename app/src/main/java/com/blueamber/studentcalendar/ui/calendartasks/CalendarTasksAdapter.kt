@@ -56,16 +56,7 @@ class CalendarTasksAdapter(
                     notes.visibility = View.VISIBLE
                     notes.text = context.resources.getString(R.string.notes_event, it.notes)
                 }
-
-                val color = when (it.type) {
-                    "Cours" -> getCardLesson(it.typeOfSource)
-                    "TD" -> getCardTD(it.typeOfSource)
-                    "Cours+TD" -> getCardLessonAndTD(it.typeOfSource)
-                    "TD machine" -> R.color.red
-                    else -> R.color.grey
-                }
-
-                card.setCardBackgroundColor(ContextCompat.getColor(context, color))
+                card.setCardBackgroundColor(ContextCompat.getColor(context, it.colorTask))
 
                 // Change separation item
                 if (dataList.size != layoutPosition + 1) {
@@ -82,27 +73,6 @@ class CalendarTasksAdapter(
                 } else {
                     simple_separation.visibility = View.GONE
                 }
-            }
-        }
-
-        private fun getCardLesson(typeOfSource: TypeOfSource): Int {
-            return when (typeOfSource) {
-                TypeOfSource.CELCAT -> R.color.blue_light
-                TypeOfSource.OTHER -> R.color.orange
-            }
-        }
-
-        private fun getCardTD(typeOfSource: TypeOfSource): Int {
-            return when (typeOfSource) {
-                TypeOfSource.CELCAT -> R.color.blue
-                TypeOfSource.OTHER -> R.color.red
-            }
-        }
-
-        private fun getCardLessonAndTD(typeOfSource: TypeOfSource): Int {
-            return when (typeOfSource) {
-                TypeOfSource.CELCAT -> R.color.blue
-                TypeOfSource.OTHER -> R.color.red
             }
         }
     }

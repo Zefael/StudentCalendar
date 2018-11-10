@@ -6,6 +6,7 @@ import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.calendarjson.CalendarJsonDto
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.models.TypeOfSource
+import com.blueamber.studentcalendar.tools.ColorUtil
 import com.blueamber.studentcalendar.tools.DateUtil
 
 class CalendarUseCase(private val remote: NetworkJsonRepository, private val locale: TasksCalendarDao) {
@@ -39,6 +40,7 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
                     item.acronym.substringAfter("::"),
                     item.type,
                     TypeOfSource.OTHER,
+                    ColorUtil.colorForTask(item.type, TypeOfSource.OTHER),
                     item.date_start.substringAfter("T"),
                     item.date_end.substringAfter("T"),
                     item.lecturer,

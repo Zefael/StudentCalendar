@@ -7,6 +7,7 @@ import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.CelcatXmlDto
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.models.TypeOfSource
+import com.blueamber.studentcalendar.tools.ColorUtil
 import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.tools.FileUtil
 import org.simpleframework.xml.core.Persister
@@ -43,6 +44,7 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
                     buildListItemToString(event.resources.modules),
                     event.category,
                     TypeOfSource.CELCAT,
+                    ColorUtil.colorForTask(event.category, TypeOfSource.CELCAT),
                     event.startTime,
                     event.endTime,
                     buildListItemToString(event.resources.staffs),

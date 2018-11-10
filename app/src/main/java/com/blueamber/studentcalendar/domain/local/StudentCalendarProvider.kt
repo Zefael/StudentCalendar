@@ -31,7 +31,7 @@ class StudentCalendarProvider : ContentProvider() {
             async {
                 when (uriMatcher.match(uri)) {
                     1 -> {
-                        cursor = tasksDao?.selectAllBeginToday(DateUtil.yesterday())
+                        cursor = tasksDao?.selectAllBeginTodayForTwoWeek(DateUtil.yesterday(), DateUtil.dateAddDay(DateUtil.yesterday().time, 8))
                     }
                 }
             }.await()

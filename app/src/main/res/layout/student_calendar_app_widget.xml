@@ -13,7 +13,7 @@
             android:textSize="24sp"
             android:textStyle="bold|italic"
             android:padding="10dp"
-            android:background="#09C"/>
+            android:background="#00a7c3"/>
 
     <ListView
             android:id="@+id/appwidget_event_list"

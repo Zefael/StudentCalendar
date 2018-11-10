@@ -45,6 +45,14 @@ object DateUtil {
         return c1.get(Calendar.DAY_OF_YEAR) - c2.get(Calendar.DAY_OF_YEAR)
     }
 
+    fun dateAddDay(date: Long, day: Int): Date {
+        val c1 = Calendar.getInstance()
+        c1.timeInMillis = date
+        c1.add(Calendar.DAY_OF_YEAR, day)
+
+        return c1.time
+    }
+
     fun isEqualsDate(d1: Long, d2: Long): Boolean {
         val c1 = Calendar.getInstance()
         c1.timeInMillis = d1

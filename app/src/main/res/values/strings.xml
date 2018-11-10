@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">Student Calendar</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Calendrier Etudiant</string>
     <string name="nav_header_subtitle">Bordeaux - Bio-infoformatique</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Préférences</string>
+    <string name="nav_planning">Planning</string>
+    <string name="nav_week">Semaine</string>
+    <string name="nav_parameter">Paramètres</string>
+
+    <string name="action_refresh">Actualiser</string>
+
     <string name="hours_start_end">%s - %s</string>
     <string name="date_event">%s\n%s</string>
     <string name="notes_event">note(s) : %s</string>
