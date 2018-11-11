@@ -35,7 +35,16 @@
 
         <receiver android:name=".widget.StudentCalendarAppWidget">
             <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.LOCALE_CHANGED"/>
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.student.calendar.action.APPWIDGET_UPDATE"/>
             </intent-filter>
 
             <meta-data
@@ -43,7 +52,6 @@
                     android:resource="@xml/student_calendar_app_widget_info"/>
         </receiver>
 
-        <service android:name=".widget.StudentCalendarAppWidget$UpdateService"/>
         <service
                 android:name=".widget.StudentCalendarWidgetService"
                 android:exported="false"
