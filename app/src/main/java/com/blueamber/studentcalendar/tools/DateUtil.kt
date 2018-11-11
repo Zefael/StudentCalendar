@@ -45,6 +45,14 @@ object DateUtil {
         return c1.get(Calendar.DAY_OF_YEAR) - c2.get(Calendar.DAY_OF_YEAR)
     }
 
+    fun isNowBeforeToTasks(hours: String): Boolean {
+        val todayDate = Calendar.getInstance()
+
+        val hoursToInt = hours.substringBefore(":").toInt()
+        val minuteToInt = hours.substringAfter(":").toInt()
+        return (todayDate.get(Calendar.HOUR_OF_DAY) < hoursToInt || (todayDate.get(Calendar.HOUR_OF_DAY) == hoursToInt && todayDate.get(Calendar.MINUTE) < minuteToInt))
+    }
+
     fun dateAddDay(date: Long, day: Int): Date {
         val c1 = Calendar.getInstance()
         c1.timeInMillis = date

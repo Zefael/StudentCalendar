@@ -51,6 +51,14 @@ class StudentCalendarWidgetFactory(val context: Context, val intent: Intent?) : 
         cursor?.moveToPosition(position)
         val dateActual = Date(cursor?.getString(cursor?.getColumnIndex("date") ?: 0)?.toLong() ?: 0)
 
+        if (DateUtil.isToday(dateActual.time) && !DateUtil.isNowBeforeToTasks(cursor?.getString(cursor?.getColumnIndex("hourEnd") ?: 0) ?: "")) {
+            remoteViews.setViewVisibility(R.id.item_widget_remote_view, View.GONE)
+            return remoteViews
+        } else {
+            remoteViews.setViewVisibility(R.id.item_widget_remote_view, View.VISIBLE)
+        }
+
+
         if (position > 0 && DateUtil.isEqualsDate(dateActual.time, dateBefore?.time ?: 0)) {
             remoteViews.setViewVisibility(R.id.item_event_date, View.INVISIBLE)
         } else {
