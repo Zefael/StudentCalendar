@@ -73,6 +73,10 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            android.R.id.home -> {
+                drawer_layout.openDrawer(GravityCompat.START)
+                true
+            }
             R.id.action_refresh -> {
                 "Test Update".toast(this)
                 true
@@ -82,22 +86,21 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
     }
 
     override fun onNavigationItemSelected(it: MenuItem): Boolean {
-        return when (it.itemId) {
+        drawer_layout.closeDrawer(GravityCompat.START)
+        when (it.itemId) {
             R.id.nav_planning -> {
-                true
+                "Test Planning".toast(this)
             }
             R.id.nav_week -> {
-                true
             }
             R.id.nav_web -> {
                 supportFragmentManager?.let { WebviewDialog.show(it, Constants.URL_WEBSITE) }
-                true
             }
             R.id.nav_parameter -> {
-                true
             }
-            else -> false
+            else -> return false
         }
+        return true
     }
 
     private fun onNavigationUpdate(navigationState: NavigationState) {
