@@ -13,6 +13,7 @@ import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.ui.base.BaseActivity
 import com.blueamber.studentcalendar.ui.calendartasks.CalendarTasksFragment
 import com.blueamber.studentcalendar.ui.common.WebviewDialog
+import com.blueamber.studentcalendar.ui.settings.SettingsFragment
 import com.emas.mondial.ui.main.Back
 import com.emas.mondial.ui.main.LoadFragment
 import com.emas.mondial.ui.main.NavigationState
@@ -62,7 +63,15 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            navigationDelegate.handleBackPressed {
+                    isLastFragment ->
+                if(isLastFragment) {
+                    finish()
+                }
+                else {
+                    super.onBackPressed()
+                }
+            }
         }
     }
 
@@ -78,7 +87,7 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
                 true
             }
             R.id.action_refresh -> {
-                "Test Update".toast(this)
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -89,7 +98,7 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
         drawer_layout.closeDrawer(GravityCompat.START)
         when (it.itemId) {
             R.id.nav_planning -> {
-                "Test Planning".toast(this)
+                navigationDelegate.navigate(CalendarTasksFragment())
             }
             R.id.nav_week -> {
             }
@@ -97,6 +106,7 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
                 supportFragmentManager?.let { WebviewDialog.show(it, Constants.URL_WEBSITE) }
             }
             R.id.nav_parameter -> {
+                navigationDelegate.navigate(SettingsFragment())
             }
             else -> return false
         }

@@ -15,10 +15,6 @@ import kotlinx.android.synthetic.main.calendar_tasks_fragment.*
 
 class CalendarTasksFragment : NavigationFragment() {
 
-    companion object {
-        fun newInstance() = CalendarTasksFragment()
-    }
-
     private lateinit var viewModel: CalendarTasksViewModel
     private lateinit var adapter: CalendarTasksAdapter
 
