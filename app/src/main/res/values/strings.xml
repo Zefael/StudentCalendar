@@ -19,4 +19,5 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="close">Fermer</string>
+    <string name="load_data">Chargement des données &#8230;</string>
 </resources>

@@ -39,7 +39,7 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        navigationDelegate = NavigationDelegate(supportFragmentManager, contentFrame.id)
+        navigationDelegate = NavigationDelegate(supportFragmentManager, contentFrame.id, false)
         navigationDelegate.navigate(CalendarTasksFragment())
 
         nav_view.setNavigationItemSelectedListener(this)

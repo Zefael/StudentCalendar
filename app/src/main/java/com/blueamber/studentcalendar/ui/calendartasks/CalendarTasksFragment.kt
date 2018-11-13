@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.blueamber.studentcalendar.Constants
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.TasksCalendar
@@ -40,7 +41,9 @@ class CalendarTasksFragment : NavigationFragment() {
         viewModel.dataDownloaded.observe(this,
             Observer<List<TasksCalendar>> { it ->
                 val itFilter = it?.filter { (DateUtil.isToday(it.date.time) && DateUtil.isNowBeforeToTasks(it.hourEnd)) || !DateUtil.isToday(it.date.time) }
-                itFilter?.let { adapter.update(it, true) }
+                itFilter?.let {
+                    adapter.update(it, true)
+                    tasks_planing.visibility = View.VISIBLE}
             })
         viewModel.titleToolBar.observe(this,
             Observer { it -> it?.let { applyStatusBarTitle(it) } })
