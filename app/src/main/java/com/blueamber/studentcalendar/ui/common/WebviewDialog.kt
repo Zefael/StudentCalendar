@@ -34,7 +34,7 @@ class WebviewDialog : BaseDialog() {
     override fun setupViews() {
         webviewClose.setOnClickListener { dismiss() }
         webviewContent.settings.apply {
-            javaScriptEnabled = false
+            javaScriptEnabled = true
             useWideViewPort = true
             loadWithOverviewMode = true
             builtInZoomControls = true
@@ -45,6 +45,7 @@ class WebviewDialog : BaseDialog() {
     override fun setupData() {
         val url = arguments!!.getString(ARG_URL)
         webviewContent.loadUrl(url)
+        webviewContent.reload()
     }
 
 }
