@@ -20,4 +20,8 @@
     <string name="add_widget">Add widget</string>
     <string name="close">Fermer</string>
     <string name="load_data">Chargement des données &#8230;</string>
+    <string name="rename_group_hint">Renommer le groupe</string>
+    <string name="settings_title">Mes préférences</string>
+    <string name="settings_group">Paramètrage des groupes</string>
+    <string name="settings_group_legendary">Vous pouvez sélectionner ou déselectionner les groupes que vous souhaitez voir affichés.\nVous pouvez également renommer les groupes</string>
 </resources>

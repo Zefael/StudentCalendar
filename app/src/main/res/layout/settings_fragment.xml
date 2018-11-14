@@ -8,7 +8,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mes préférences"
+            android:text="@string/settings_title"
             android:textColor="@color/dark_grey"
             android:layout_marginTop="20dp"
             android:textSize="18sp"/>
@@ -19,20 +19,21 @@
             android:textSize="14sp"
             android:textColor="@color/dark_grey"
             android:layout_marginTop="10dp"
-            android:text="Paramètrage des groupes"/>
+            android:text="@string/settings_group"/>
 
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="@color/medium_grey"
-            android:text="Vous pouvez sélectionner ou déselectionner les groupes que vous souhaitez voir affichés.\nVous pouvez également renommer les groups"
+            android:text="@string/settings_group_legendary"
             android:layout_marginTop="5dp"/>
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/list_Group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:background="@android:color/white"/>
 
 </LinearLayout>
