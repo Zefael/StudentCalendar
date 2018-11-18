@@ -3,11 +3,13 @@ package com.blueamber.studentcalendar.ui.calendartasks
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.blueamber.studentcalendar.domain.local.GroupsDao
 import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
 import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
 import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
+import com.blueamber.studentcalendar.models.Groups
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.tools.DateUtil
 import kotlinx.coroutines.experimental.android.UI
@@ -20,7 +22,8 @@ class CalendarTasksViewModel @Inject constructor(
     private val app: Application,
     private val remoteXml: NetworkXmlRepository,
     private val remoteJson: NetworkJsonRepository,
-    private val locale: TasksCalendarDao
+    private val locale: TasksCalendarDao,
+    private val localeGroups: GroupsDao
 ) : ViewModel() {
 
     val dataDownloaded = MutableLiveData<List<TasksCalendar>>()
@@ -30,7 +33,9 @@ class CalendarTasksViewModel @Inject constructor(
         locale.deleteTasks()
         val dataCelcat = CelcatUseCase(remoteXml, locale).downloadCelcat(app)
         val dataOther = CalendarUseCase(remoteJson, locale).downloadJsonCalendar()
-        locale.insert(sortDataDay(dataOther, dataCelcat))
+        val tasksForInsert = sortDataDay(dataOther, dataCelcat)
+        localeGroups.insert(createListOfGroups(tasksForInsert))
+        locale.insert(tasksForInsert)
         val dataDay = locale.getTasksAfterDate(DateUtil.yesterday())
         withContext(UI) { dataDownloaded.value = dataDay }
     }
@@ -44,5 +49,21 @@ class CalendarTasksViewModel @Inject constructor(
 
     fun setToolbarTitle(title: String) {
         titleToolBar.value = title
+    }
+
+    private fun createListOfGroups(tasksList: List<TasksCalendar>): List<Groups> {
+        val result = ArrayList<Groups>()
+        tasksList.forEach {
+            val group = Groups(it.group, it.group, true)
+            result.add(group)
+        }
+        return result
+    }
+
+    private fun replaceGroups(listIn: List<TasksCalendar>): List<TasksCalendar> {
+        listIn.forEach {
+            it.group = localeGroups.getNewGroupsByOriginal(it.group)
+        }
+        return listIn
     }
 }

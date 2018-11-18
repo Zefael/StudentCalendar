@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.TasksCalendar
-import com.blueamber.studentcalendar.models.TypeOfSource
 import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.ui.base.recycler.BaseHolder
 import com.blueamber.studentcalendar.ui.base.recycler.BaseRecyclerAdapter

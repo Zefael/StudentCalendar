@@ -19,25 +19,17 @@ class NavigationDelegate(private val fragmentManager: FragmentManager,
 
     fun navigate(to: Fragment) {
         val from = currentFragment()
+        if(from != null) from.userVisibleHint = false
 
-        if (from?.tag != to.tag) {
-            if (from != null) from.userVisibleHint = false
-
-            val transaction = fragmentManager.beginTransaction()
-            if (fragmentManager.backStackEntryCount > 0) {
-                transaction.setCustomAnimations(
-                    R.anim.slide_in_right,
-                    R.anim.slide_out_left,
-                    R.anim.slide_in_left,
-                    R.anim.slide_out_right
-                )
-            }
-            transaction.add(containerId, to, fragmentManager.backStackEntryCount.toString())
-            if (addToBackStack) {
-                transaction.addToBackStack(null)
-            }
-            transaction.commit()
+        val transaction = fragmentManager.beginTransaction()
+        if(fragmentManager.backStackEntryCount > 0) {
+            transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
         }
+        transaction.replace(containerId, to, fragmentManager.backStackEntryCount.toString()).commit()
+    }
+
+    fun replace(fragment: Fragment) {
+        fragmentManager.beginTransaction().replace(containerId, fragment).commit()
     }
 
     fun handleBackPressed(defaultAction:(isLastFragment: Boolean) -> Unit) {

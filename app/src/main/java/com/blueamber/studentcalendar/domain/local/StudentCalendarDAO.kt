@@ -2,6 +2,7 @@ package com.blueamber.studentcalendar.domain.local
 
 import android.arch.persistence.room.*
 import android.database.Cursor
+import com.blueamber.studentcalendar.models.Groups
 import com.blueamber.studentcalendar.models.TasksCalendar
 import java.util.*
 
@@ -13,7 +14,7 @@ interface BaseDao<T> {
      *
      * @param obj the object to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(obj: T)
 
     /**
@@ -21,7 +22,7 @@ interface BaseDao<T> {
      *
      * @param obj the objects to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(vararg obj: T)
 
     /**
@@ -29,7 +30,7 @@ interface BaseDao<T> {
      *
      * @param obj the objects to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(obj: List<T>)
 
     /**
@@ -68,4 +69,14 @@ interface TasksCalendarDao : BaseDao<TasksCalendar> {
 
     @Query("SELECT COUNT(*) FROM TasksCalendar")
     fun countTasksWithData(): Cursor
+}
+
+@Dao
+interface GroupsDao : BaseDao<Groups> {
+
+    @Query("SELECT * FROM Groups")
+    fun getGroups(): List<Groups>
+
+    @Query("SELECT newGroups FROM Groups WHERE originalGroups = :group")
+    fun getNewGroupsByOriginal(group: String): String
 }

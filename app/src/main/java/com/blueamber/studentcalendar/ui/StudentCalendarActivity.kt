@@ -99,6 +99,7 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
         when (it.itemId) {
             R.id.nav_planning -> {
                 navigationDelegate.navigate(CalendarTasksFragment())
+                onStatusBarTitleUpdate(getString(R.string.app_name))
             }
             R.id.nav_week -> {
             }
@@ -106,7 +107,8 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
                 supportFragmentManager?.let { WebviewDialog.show(it, Constants.URL_WEBSITE) }
             }
             R.id.nav_parameter -> {
-                navigationDelegate.navigate(SettingsFragment())
+                navigationDelegate.replace(SettingsFragment())
+                onStatusBarTitleUpdate(getString(R.string.settings_title))
             }
             else -> return false
         }

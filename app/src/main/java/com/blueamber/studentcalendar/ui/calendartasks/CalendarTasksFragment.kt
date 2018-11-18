@@ -5,12 +5,10 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.blueamber.studentcalendar.Constants
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.ui.NavigationFragment
-import com.blueamber.studentcalendar.ui.common.WebviewDialog
 import kotlinx.android.synthetic.main.calendar_tasks_fragment.*
 
 class CalendarTasksFragment : NavigationFragment() {
