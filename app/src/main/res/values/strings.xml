@@ -11,7 +11,7 @@
     <string name="nav_web">Accès au site</string>
     <string name="nav_parameter">Paramètres</string>
 
-    <string name="action_refresh">Actualiser</string>
+    <string name="action_refresh_saving">Actualiser/Sauvegarder</string>
 
     <string name="hours_start_end">%s - %s</string>
     <string name="date_event">%s\n%s</string>
@@ -19,6 +19,7 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="close">Fermer</string>
+    <string name="save">Sauvegarder</string>
     <string name="load_data">Chargement des données &#8230;</string>
     <string name="rename_group_hint">Renommer le groupe</string>
     <string name="settings_title">Mes préférences</string>

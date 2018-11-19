@@ -15,7 +15,7 @@ class NavigationDelegate(private val fragmentManager: FragmentManager,
         }
     }
 
-    private fun currentFragment() : Fragment? = fragmentManager.findFragmentByTag((fragmentManager.backStackEntryCount - 1).toString())
+    fun currentFragment() : Fragment? = fragmentManager.findFragmentByTag((fragmentManager.backStackEntryCount - 1).toString())
 
     fun navigate(to: Fragment) {
         val from = currentFragment()

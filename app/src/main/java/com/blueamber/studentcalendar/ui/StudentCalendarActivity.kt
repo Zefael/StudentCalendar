@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.blueamber.studentcalendar.Constants
 import com.blueamber.studentcalendar.R
+import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.ui.base.BaseActivity
 import com.blueamber.studentcalendar.ui.calendartasks.CalendarTasksFragment
 import com.blueamber.studentcalendar.ui.common.WebviewDialog
@@ -86,8 +87,14 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
                 drawer_layout.openDrawer(GravityCompat.START)
                 true
             }
-            R.id.action_refresh -> {
+            R.id.action_refresh_save -> {
+                val actualFragment = navigationDelegate.currentFragment()
+                if (actualFragment is SettingsFragment) {
+                    navigationDelegate.navigate(CalendarTasksFragment())
+                    onStatusBarTitleUpdate(getString(R.string.app_name))
+                } else if (actualFragment is CalendarTasksFragment) {
 
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -107,7 +114,7 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
                 supportFragmentManager?.let { WebviewDialog.show(it, Constants.URL_WEBSITE) }
             }
             R.id.nav_parameter -> {
-                navigationDelegate.replace(SettingsFragment())
+                supportFragmentManager?.let { SettingsFragment.show(it) }
                 onStatusBarTitleUpdate(getString(R.string.settings_title))
             }
             else -> return false

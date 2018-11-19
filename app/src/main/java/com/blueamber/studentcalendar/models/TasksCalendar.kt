@@ -18,7 +18,7 @@ data class TasksCalendar(val date: Date,
                          val hourEnd: String,
                          val professors: String,
                          val rooms: String,
-                         var group: String,
+                         val group: String,
                          val notes: String) : Parcelable, Comparable<TasksCalendar> {
 
     @IgnoredOnParcel

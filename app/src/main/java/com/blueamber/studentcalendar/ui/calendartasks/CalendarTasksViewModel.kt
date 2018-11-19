@@ -31,8 +31,8 @@ class CalendarTasksViewModel @Inject constructor(
 
     fun downloadCalendars() = launch {
         locale.deleteTasks()
-        val dataCelcat = CelcatUseCase(remoteXml, locale).downloadCelcat(app)
-        val dataOther = CalendarUseCase(remoteJson, locale).downloadJsonCalendar()
+        val dataCelcat = CelcatUseCase(remoteXml, localeGroups).downloadCelcat(app)
+        val dataOther = CalendarUseCase(remoteJson, localeGroups).downloadJsonCalendar()
         val tasksForInsert = sortDataDay(dataOther, dataCelcat)
         localeGroups.insert(createListOfGroups(tasksForInsert))
         locale.insert(tasksForInsert)
@@ -58,12 +58,5 @@ class CalendarTasksViewModel @Inject constructor(
             result.add(group)
         }
         return result
-    }
-
-    private fun replaceGroups(listIn: List<TasksCalendar>): List<TasksCalendar> {
-        listIn.forEach {
-            it.group = localeGroups.getNewGroupsByOriginal(it.group)
-        }
-        return listIn
     }
 }

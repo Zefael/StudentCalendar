@@ -2,9 +2,10 @@ package com.blueamber.studentcalendar.domain.usecases
 
 import android.content.Context
 import android.util.Log
-import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
+import com.blueamber.studentcalendar.domain.local.GroupsDao
 import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.CelcatXmlDto
+import com.blueamber.studentcalendar.models.Groups
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.models.TypeOfSource
 import com.blueamber.studentcalendar.tools.ColorUtil
@@ -12,7 +13,7 @@ import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.tools.FileUtil
 import org.simpleframework.xml.core.Persister
 
-class CelcatUseCase(private val remote: NetworkXmlRepository, private val local: TasksCalendarDao) {
+class CelcatUseCase(private val remote: NetworkXmlRepository, private val local: GroupsDao) {
 
     suspend fun downloadCelcat(context: Context): List<TasksCalendar> {
         return try {
@@ -22,7 +23,7 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
                 val serializer = Persister()
                 val source = FileUtil.writeResponseBodyToDisk(context, response.body(), "calendrier_semestre.xml")
                 val semestre = serializer.read<CelcatXmlDto>(CelcatXmlDto::class.java, source)
-                convert(semestre)
+                convert(semestre, local.getGroups())
             } else emptyList()
         } catch (exception: Exception) {
             Log.e(
@@ -33,11 +34,13 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
         }
     }
 
-    private fun convert(celcatXmlDto: CelcatXmlDto): List<TasksCalendar> {
+    private fun convert(celcatXmlDto: CelcatXmlDto, groups: List<Groups>): List<TasksCalendar> {
         val result = ArrayList<TasksCalendar>()
         val sortedCelcat = celcatXmlDto.event.sortedWith(compareBy { it.date })
 
         for (event in sortedCelcat) {
+            val groupBuilded = buildListItemToString(event.resources.groups)
+            val group = groups.find { it.originalGroups == groupBuilded }?.newGroups ?: groupBuilded
             result.add(
                 TasksCalendar(
                     DateUtil.formatDateSlash(DateUtil.addDayToDateString(event.date, event.day)),
@@ -49,7 +52,7 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
                     event.endTime,
                     buildListItemToString(event.resources.staffs),
                     buildListItemToString(event.resources.rooms),
-                    buildListItemToString(event.resources.groups),
+                    group,
                     event.notes
                 )
             )

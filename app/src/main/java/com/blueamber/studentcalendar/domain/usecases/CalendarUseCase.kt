@@ -1,22 +1,23 @@
 package com.blueamber.studentcalendar.domain.usecases
 
 import android.util.Log
-import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
+import com.blueamber.studentcalendar.domain.local.GroupsDao
 import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.calendarjson.CalendarJsonDto
+import com.blueamber.studentcalendar.models.Groups
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.models.TypeOfSource
 import com.blueamber.studentcalendar.tools.ColorUtil
 import com.blueamber.studentcalendar.tools.DateUtil
 
-class CalendarUseCase(private val remote: NetworkJsonRepository, private val locale: TasksCalendarDao) {
+class CalendarUseCase(private val remote: NetworkJsonRepository, private val locale: GroupsDao) {
 
     suspend fun downloadJsonCalendar(): List<TasksCalendar> {
         return try {
             val request = remote.getCalendar()
             val response = request.await()
             if (request.isCompleted) {
-                convert(response.body() ?: emptyMap())
+                convert(response.body() ?: emptyMap(), locale.getGroups())
             } else emptyList()
         } catch (exception: Exception) {
             Log.e(
@@ -28,12 +29,10 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
         }
     }
 
-    private fun convert(data: Map<String, CalendarJsonDto>): List<TasksCalendar> {
+    private fun convert(data: Map<String, CalendarJsonDto>, groups: List<Groups>): List<TasksCalendar> {
         val result = ArrayList<TasksCalendar>()
 
         data.forEach { (_, item) ->
-            val group = item.group.replace(";", "")
-            group.replace(" ", "")
             result.add(
                 TasksCalendar(
                     DateUtil.formatDateDashT(item.date_start),
@@ -45,7 +44,7 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
                     item.date_end.substringAfter("T"),
                     item.lecturer,
                     item.location.substringAfter("::").replace("@", "/"),
-                    group,
+                    groups.find { it.originalGroups == item.group }?.newGroups ?: item.group,
                     if (item.comment.contains("Imported")) "" else (item.comment)
                 )
             )

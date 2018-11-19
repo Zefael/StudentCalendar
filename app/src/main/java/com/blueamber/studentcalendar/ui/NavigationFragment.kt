@@ -12,7 +12,7 @@ abstract class NavigationFragment : BaseFragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var mainViewModel : MainViewModel
+    protected lateinit var mainViewModel : MainViewModel
     private var statusBarColor : Int? = null
 
     @CallSuper
