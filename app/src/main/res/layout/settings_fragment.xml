@@ -6,10 +6,23 @@
         android:layout_height="match_parent">
 
     <View
-            android:id="@+id/status_settings"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@color/colorPrimaryDark"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+            android:id="@+id/dialog_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/close"
+            android:src="@drawable/ic_close"
+            android:padding="15dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="15dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -19,55 +32,54 @@
             android:text="@string/settings_title"
             android:textColor="@color/dark_grey"
             android:textSize="18sp"
-            app:layout_constraintTop_toTopOf="@+id/status_settings"
+            app:layout_constraintTop_toTopOf="@+id/dialog_close"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/status_settings"/>
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_close"/>
 
-    <ImageView
-            android:id="@+id/close_settings"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:contentDescription="@string/close"
-            android:src="@drawable/ic_close"
-            android:layout_marginEnd="8dp"
-            android:scaleType="center"
-            app:layout_constraintTop_toTopOf="@+id/status_settings"
-            app:layout_constraintEnd_toEndOf="@+id/status_settings"
-            app:layout_constraintBottom_toBottomOf="@+id/status_settings"/>
-
-    <LinearLayout
-            android:id="@+id/settings_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+    <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/status_settings">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_close">
 
-        <TextView
+        <LinearLayout
+                android:id="@+id/settings_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/dark_grey"
-                android:layout_marginTop="10dp"
-                android:text="@string/settings_group"/>
+                android:orientation="vertical">
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="@color/medium_grey"
-                android:text="@string/settings_group_legendary"
-                android:layout_marginTop="5dp"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/dark_grey"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/settings_group"/>
 
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/list_Group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@android:color/white"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/medium_grey"
+                    android:text="@string/settings_group_legendary"
+                    android:layout_marginTop="5dp"/>
 
-    </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/list_Group"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:background="@android:color/white"
+                    android:orientation="vertical"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

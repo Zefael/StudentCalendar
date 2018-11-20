@@ -5,13 +5,15 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
-import android.support.v7.widget.LinearLayoutManager
-import android.view.View
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Switch
+import android.widget.TextView
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.Groups
 import com.blueamber.studentcalendar.modules.Injectable
-import com.blueamber.studentcalendar.ui.NavigationFragment
-import com.blueamber.studentcalendar.ui.base.BaseDialog
 import com.blueamber.studentcalendar.ui.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.settings_fragment.*
 
@@ -29,7 +31,6 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
     }
 
     private lateinit var viewModel: SettingsViewModel
-    private lateinit var adapter: SettingsGroupsAdapter
 
     override fun getLayoutId(): Int = R.layout.settings_fragment
 
@@ -39,25 +40,59 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
 
     override fun setupObservers() {
         viewModel.groups.observe(this,
-            Observer<List<Groups>> { it -> it?.let { adapter.update(it, true) } })
+            Observer<List<Groups>> { it -> it?.let { updateGroups(it) } })
+    }
+
+    override fun preInit() {
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullscreenDialog)
     }
 
     override fun setupViews() {
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullscreenDialog)
-        close_settings.setOnClickListener {
+        dialog_close.setOnClickListener {
             dismiss()
         }
     }
 
-    override fun setupData() {
-        viewModel.downloadGroups()
-        adapter = SettingsGroupsAdapter()
-        val manager = LinearLayoutManager(requireContext())
-        list_Group.layoutManager = manager
-        list_Group.adapter = adapter
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
-    override fun onBackPressed(): Boolean {
-        return false
+    override fun setupData() {
+        viewModel.downloadGroups()
+//        adapter = SettingsGroupsAdapter(viewModel)
+//        val manager = LinearLayoutManager(requireContext())
+//        list_Group.layoutManager = manager
+//        list_Group.adapter = adapter
+    }
+
+    private fun updateGroups(groups: List<Groups>) {
+        groups.forEach {
+            val itemGroups = layoutInflater.inflate(R.layout.settings_group_item, null)
+            val switcher = itemGroups.findViewById<Switch>(R.id.group_switch)
+            val originalGroup = itemGroups.findViewById<TextView>(R.id.group_original_name)
+            val newGroup = itemGroups.findViewById<EditText>(R.id.group_new_name)
+
+            switcher.isChecked = it.visibility
+            originalGroup.text = it.originalGroups
+            newGroup.setText(it.newGroups)
+
+            switcher.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.updateVisibility(isChecked, it.originalGroups)
+            }
+
+            newGroup.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    if (!s.isNullOrEmpty()) {
+                        viewModel.updateNewGroup(s.toString(), it.originalGroups)
+                    }
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
+            list_Group.addView(itemGroups)
+        }
     }
 }

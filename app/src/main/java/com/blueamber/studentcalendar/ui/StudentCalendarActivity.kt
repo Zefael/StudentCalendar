@@ -58,6 +58,8 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
             Observer { statusBarColor -> statusBarColor?.let { onStatusBarColorUpdate(it) } })
         mainViewModel.statusBarTitle.observe(this,
             Observer { title -> title?.let { onStatusBarTitleUpdate(it) } })
+        mainViewModel.statusBarOptionIcon.observe(this,
+            Observer { icon -> icon?.let{ onStatusBarOptionIcon(it) } })
     }
 
     override fun onBackPressed() {
@@ -88,13 +90,7 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
                 true
             }
             R.id.action_refresh_save -> {
-                val actualFragment = navigationDelegate.currentFragment()
-                if (actualFragment is SettingsFragment) {
-                    navigationDelegate.navigate(CalendarTasksFragment())
-                    onStatusBarTitleUpdate(getString(R.string.app_name))
-                } else if (actualFragment is CalendarTasksFragment) {
-
-                }
+                mainViewModel.refreshNeeded.value = true
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -106,7 +102,6 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
         when (it.itemId) {
             R.id.nav_planning -> {
                 navigationDelegate.navigate(CalendarTasksFragment())
-                onStatusBarTitleUpdate(getString(R.string.app_name))
             }
             R.id.nav_week -> {
             }
@@ -115,7 +110,6 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
             }
             R.id.nav_parameter -> {
                 supportFragmentManager?.let { SettingsFragment.show(it) }
-                onStatusBarTitleUpdate(getString(R.string.settings_title))
             }
             else -> return false
         }
@@ -135,6 +129,10 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
 
     private fun onStatusBarTitleUpdate(title: String) {
         toolbar.title = title
+    }
+
+    private fun onStatusBarOptionIcon(icon: Int) {
+        toolbar.menu.getItem(0).icon = getDrawable(icon)
     }
 
     override fun onStop() {

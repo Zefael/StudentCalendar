@@ -21,4 +21,12 @@ class SettingsViewModel @Inject constructor(
         val result = locale.getGroups()
         withContext(UI) { groups.value = result }
     }
+
+    fun updateVisibility(newVisibility: Boolean, group: String) {
+        launch { locale.updateVisibility(newVisibility, group) }
+    }
+
+    fun updateNewGroup(newGroup: String, group: String) {
+        launch { locale.updateNewGroup(newGroup, group) }
+    }
 }

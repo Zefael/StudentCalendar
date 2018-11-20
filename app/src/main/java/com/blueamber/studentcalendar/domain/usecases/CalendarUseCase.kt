@@ -33,21 +33,24 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
         val result = ArrayList<TasksCalendar>()
 
         data.forEach { (_, item) ->
-            result.add(
-                TasksCalendar(
-                    DateUtil.formatDateDashT(item.date_start),
-                    item.acronym.substringAfter("::"),
-                    item.type,
-                    TypeOfSource.OTHER,
-                    ColorUtil.colorForTask(item.type, TypeOfSource.OTHER),
-                    item.date_start.substringAfter("T"),
-                    item.date_end.substringAfter("T"),
-                    item.lecturer,
-                    item.location.substringAfter("::").replace("@", "/"),
-                    groups.find { it.originalGroups == item.group }?.newGroups ?: item.group,
-                    if (item.comment.contains("Imported")) "" else (item.comment)
+            val group = groups.find { it.originalGroups == item.group }
+            if (group?.visibility ?: true) {
+                result.add(
+                    TasksCalendar(
+                        DateUtil.formatDateDashT(item.date_start),
+                        item.acronym.substringAfter("::"),
+                        item.type,
+                        TypeOfSource.OTHER,
+                        ColorUtil.colorForTask(item.type, TypeOfSource.OTHER),
+                        item.date_start.substringAfter("T"),
+                        item.date_end.substringAfter("T"),
+                        item.lecturer,
+                        item.location.substringAfter("::").replace("@", "/"),
+                        group?.newGroups ?: item.group,
+                        if (item.comment.contains("Imported")) "" else (item.comment)
+                    )
                 )
-            )
+            }
         }
         return result
     }

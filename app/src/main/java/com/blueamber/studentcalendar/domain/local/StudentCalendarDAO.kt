@@ -79,4 +79,10 @@ interface GroupsDao : BaseDao<Groups> {
 
     @Query("SELECT newGroups FROM Groups WHERE originalGroups = :group")
     fun getNewGroupsByOriginal(group: String): String
+
+    @Query("UPDATE Groups SET visibility = :newVisibility WHERE originalGroups = :group")
+    fun updateVisibility(newVisibility: Boolean, group: String)
+
+    @Query("UPDATE Groups SET newGroups = :newGroup WHERE originalGroups = :group")
+    fun updateNewGroup(newGroup: String, group: String)
 }

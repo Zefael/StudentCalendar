@@ -41,6 +41,11 @@ class CalendarTasksFragment : NavigationFragment() {
             })
         viewModel.titleToolBar.observe(this,
             Observer { it -> it?.let { applyStatusBarTitle(it) } })
+        mainViewModel.refreshNeeded.observe(this,
+            Observer<Boolean> {
+                tasks_planing.visibility = View.GONE
+                viewModel.downloadCalendars()
+            })
     }
 
     override fun setupData() {

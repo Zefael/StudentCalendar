@@ -40,22 +40,24 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
 
         for (event in sortedCelcat) {
             val groupBuilded = buildListItemToString(event.resources.groups)
-            val group = groups.find { it.originalGroups == groupBuilded }?.newGroups ?: groupBuilded
-            result.add(
-                TasksCalendar(
-                    DateUtil.formatDateSlash(DateUtil.addDayToDateString(event.date, event.day)),
-                    buildListItemToString(event.resources.modules),
-                    event.category,
-                    TypeOfSource.CELCAT,
-                    ColorUtil.colorForTask(event.category, TypeOfSource.CELCAT),
-                    event.startTime,
-                    event.endTime,
-                    buildListItemToString(event.resources.staffs),
-                    buildListItemToString(event.resources.rooms),
-                    group,
-                    event.notes
+            val group = groups.find { it.originalGroups == groupBuilded }
+            if (group?.visibility ?: true) {
+                result.add(
+                    TasksCalendar(
+                        DateUtil.formatDateSlash(DateUtil.addDayToDateString(event.date, event.day)),
+                        buildListItemToString(event.resources.modules),
+                        event.category,
+                        TypeOfSource.CELCAT,
+                        ColorUtil.colorForTask(event.category, TypeOfSource.CELCAT),
+                        event.startTime,
+                        event.endTime,
+                        buildListItemToString(event.resources.staffs),
+                        buildListItemToString(event.resources.rooms),
+                        group?.newGroups ?: groupBuilded,
+                        event.notes
+                    )
                 )
-            )
+            }
         }
         return result
     }
