@@ -70,8 +70,7 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
                     isLastFragment ->
                 if(isLastFragment) {
                     finish()
-                }
-                else {
+                } else {
                     super.onBackPressed()
                 }
             }
@@ -91,6 +90,7 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
             }
             R.id.action_refresh_save -> {
                 mainViewModel.refreshNeeded.value = true
+                updateWidgetData()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -136,8 +136,12 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
     }
 
     override fun onStop() {
+        updateWidgetData()
+        super.onStop()
+    }
+
+    private fun updateWidgetData() {
         val intent = Intent("com.student.calendar.action.APPWIDGET_UPDATE")
         sendBroadcast(intent)
-        super.onStop()
     }
 }

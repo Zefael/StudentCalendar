@@ -31,6 +31,7 @@ class CalendarTasksViewModel @Inject constructor(
 
     fun downloadCalendars() = launch {
         locale.deleteTasks()
+        localeGroups.deleteGroups()
         val dataCelcat = CelcatUseCase(remoteXml, localeGroups).downloadCelcat(app)
         val dataOther = CalendarUseCase(remoteJson, localeGroups).downloadJsonCalendar()
         val tasksForInsert = sortDataDay(dataOther, dataCelcat)

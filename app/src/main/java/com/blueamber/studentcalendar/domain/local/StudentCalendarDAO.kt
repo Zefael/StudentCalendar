@@ -77,6 +77,9 @@ interface GroupsDao : BaseDao<Groups> {
     @Query("SELECT * FROM Groups")
     fun getGroups(): List<Groups>
 
+    @Query("DELETE FROM Groups")
+    fun deleteGroups()
+
     @Query("SELECT newGroups FROM Groups WHERE originalGroups = :group")
     fun getNewGroupsByOriginal(group: String): String
 

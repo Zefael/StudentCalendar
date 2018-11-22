@@ -60,10 +60,6 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
 
     override fun setupData() {
         viewModel.downloadGroups()
-//        adapter = SettingsGroupsAdapter(viewModel)
-//        val manager = LinearLayoutManager(requireContext())
-//        list_Group.layoutManager = manager
-//        list_Group.adapter = adapter
     }
 
     private fun updateGroups(groups: List<Groups>) {
