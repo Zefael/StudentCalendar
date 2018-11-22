@@ -1,6 +1,6 @@
 package com.blueamber.studentcalendar.ui.base.recycler
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseRecyclerAdapter<DataType> (data: List<DataType> = listOf()) : RecyclerView.Adapter<BaseHolder<DataType>>() {
 

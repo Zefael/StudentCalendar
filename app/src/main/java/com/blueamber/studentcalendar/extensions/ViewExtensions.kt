@@ -1,8 +1,8 @@
 package com.enterprise.baseproject.extensions
 
-import android.support.annotation.ColorRes
-import android.support.annotation.FontRes
-import android.support.v4.content.res.ResourcesCompat
+import androidx.annotation.ColorRes
+import androidx.annotation.FontRes
+import androidx.core.content.res.ResourcesCompat
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.animation.Animation

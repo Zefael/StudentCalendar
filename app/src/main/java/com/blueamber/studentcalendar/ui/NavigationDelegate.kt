@@ -1,7 +1,7 @@
 package com.blueamber.studentcalendar.ui
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.ui.base.BaseFragment
 

@@ -1,8 +1,8 @@
 package com.blueamber.studentcalendar.ui
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
-import android.support.annotation.CallSuper
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.annotation.CallSuper
 import com.blueamber.studentcalendar.modules.Injectable
 import com.blueamber.studentcalendar.ui.base.BaseFragment
 import javax.inject.Inject

@@ -3,8 +3,8 @@ package com.blueamber.studentcalendar.tools
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.support.annotation.ColorRes
-import android.support.customtabs.CustomTabsIntent
+import androidx.annotation.ColorRes
+import androidx.browser.customtabs.CustomTabsIntent
 import com.enterprise.baseproject.extensions.asColor
 
 object IntentUtil {

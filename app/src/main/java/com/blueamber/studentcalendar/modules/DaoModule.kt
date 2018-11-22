@@ -1,6 +1,6 @@
 package com.blueamber.studentcalendar.modules
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.Context
 import com.blueamber.studentcalendar.domain.local.GroupsDao
 import com.blueamber.studentcalendar.domain.local.StudentCalendarDatabase

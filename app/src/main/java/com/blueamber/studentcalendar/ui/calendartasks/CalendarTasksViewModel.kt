@@ -1,8 +1,8 @@
 package com.blueamber.studentcalendar.ui.calendartasks
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.blueamber.studentcalendar.domain.local.GroupsDao
 import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
 import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository

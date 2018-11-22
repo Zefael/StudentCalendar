@@ -1,15 +1,14 @@
 package com.blueamber.studentcalendar.ui
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import com.blueamber.studentcalendar.ui.base.ActionLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.emas.mondial.ui.main.Back
 import com.emas.mondial.ui.main.LoadFragment
 import com.emas.mondial.ui.main.NavigationState
 
 class MainViewModel : ViewModel() {
 
-    val navigation = ActionLiveData<NavigationState>()
+    val navigation = MutableLiveData<NavigationState>()
     val statusBarColor = MutableLiveData<Int>()
     val statusBarTitle = MutableLiveData<String>()
     val statusBarOptionIcon = MutableLiveData<Int>()

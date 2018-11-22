@@ -1,7 +1,7 @@
 package com.enterprise.baseproject.extensions
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 
 // Colors
 fun Int.asColor(context: Context) = ContextCompat.getColor(context, this)

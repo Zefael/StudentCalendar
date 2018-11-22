@@ -1,12 +1,11 @@
 package com.blueamber.studentcalendar.domain.local
 
-import android.arch.persistence.room.Room
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
-import android.util.Log
+import androidx.room.Room
 import com.blueamber.studentcalendar.tools.DateUtil
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.runBlocking
@@ -31,7 +30,10 @@ class StudentCalendarProvider : ContentProvider() {
             async {
                 when (uriMatcher.match(uri)) {
                     1 -> {
-                        cursor = tasksDao?.selectAllBeginTodayForTwoWeek(DateUtil.yesterday(), DateUtil.dateAddDay(DateUtil.yesterday().time, 8))
+                        cursor = tasksDao?.selectAllBeginTodayForTwoWeek(
+                            DateUtil.yesterday(),
+                            DateUtil.dateAddDay(DateUtil.yesterday().time, 8)
+                        )
                     }
                 }
             }.await()

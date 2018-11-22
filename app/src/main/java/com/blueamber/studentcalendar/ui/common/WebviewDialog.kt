@@ -2,8 +2,8 @@ package com.blueamber.studentcalendar.ui.common
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.ui.base.BaseDialog
 import kotlinx.android.synthetic.main.dialog_webview.*

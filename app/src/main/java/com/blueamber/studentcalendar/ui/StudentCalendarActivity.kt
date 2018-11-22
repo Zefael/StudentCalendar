@@ -1,16 +1,14 @@
 package com.blueamber.studentcalendar.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.blueamber.studentcalendar.Constants
 import com.blueamber.studentcalendar.R
-import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.ui.base.BaseActivity
 import com.blueamber.studentcalendar.ui.calendartasks.CalendarTasksFragment
 import com.blueamber.studentcalendar.ui.common.WebviewDialog
@@ -18,7 +16,7 @@ import com.blueamber.studentcalendar.ui.settings.SettingsFragment
 import com.emas.mondial.ui.main.Back
 import com.emas.mondial.ui.main.LoadFragment
 import com.emas.mondial.ui.main.NavigationState
-import com.enterprise.baseproject.extensions.toast
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_calendar_tasks.*
 
 
@@ -59,16 +57,15 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
         mainViewModel.statusBarTitle.observe(this,
             Observer { title -> title?.let { onStatusBarTitleUpdate(it) } })
         mainViewModel.statusBarOptionIcon.observe(this,
-            Observer { icon -> icon?.let{ onStatusBarOptionIcon(it) } })
+            Observer { icon -> icon?.let { onStatusBarOptionIcon(it) } })
     }
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            navigationDelegate.handleBackPressed {
-                    isLastFragment ->
-                if(isLastFragment) {
+            navigationDelegate.handleBackPressed { isLastFragment ->
+                if (isLastFragment) {
                     finish()
                 } else {
                     super.onBackPressed()

@@ -13,7 +13,7 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode versions.versionCode
         versionName versions.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -62,19 +62,19 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutinesAndroid"
 
     // android
-    implementation "com.android.support:appcompat-v7:$versions.support"
-    implementation "com.android.support:cardview-v7:$versions.support"
-    implementation "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
-    implementation("com.android.support:customtabs:$versions.support") {
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation('androidx.browser:browser:1.0.0') {
         exclude group: 'com.android.support'
     }
-    implementation "com.android.support:design:$versions.support"
-    implementation "com.android.support:recyclerview-v7:$versions.support"
+    implementation 'com.google.android.material:material:1.1.0-alpha01'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
     // dagger
     implementation "com.google.dagger:dagger:$versions.dagger"
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
     implementation "com.google.dagger:dagger-android:$versions.dagger"
     implementation "com.google.dagger:dagger-android-support:$versions.dagger"
@@ -88,8 +88,8 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$versions.glide"
 
     // lifecycle
-    implementation "android.arch.lifecycle:extensions:$versions.lifecycle"
-    kapt "android.arch.lifecycle:compiler:$versions.lifecycle"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
 
     // okhttp
     implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttp"
@@ -102,14 +102,14 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:$versions.retroCoroutines"
 
     // room
-    implementation "android.arch.persistence.room:runtime:$versions.room"
-    kapt "android.arch.persistence.room:compiler:$versions.room"
+    implementation 'androidx.room:room-runtime:2.1.0-alpha02'
+    kapt 'androidx.room:room-compiler:2.1.0-alpha02'
 
     // GSON
     implementation "com.google.code.gson:gson:$versions.gson"
 
     // tests
     testImplementation "junit:junit:4.12"
-    androidTestImplementation "com.android.support.test:runner:$versions.runner"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$versions.espresso"
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }

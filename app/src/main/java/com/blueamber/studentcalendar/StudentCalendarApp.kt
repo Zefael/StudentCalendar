@@ -3,7 +3,7 @@ package com.blueamber.studentcalendar
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.blueamber.studentcalendar.modules.AppModule
 import com.pixplicity.easyprefs.library.Prefs
 import dagger.android.AndroidInjector
