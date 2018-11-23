@@ -25,4 +25,5 @@
     <string name="settings_title">Mes préférences</string>
     <string name="settings_group">Paramètrage des groupes</string>
     <string name="settings_group_legendary">Vous pouvez sélectionner ou déselectionner les groupes que vous souhaitez voir affichés.\nVous pouvez également renommer les groupes</string>
+    <string name="all_groups">Tout les groupes</string>
 </resources>

@@ -1,20 +1,20 @@
 package com.blueamber.studentcalendar.ui.settings
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Switch
 import android.widget.TextView
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.Groups
 import com.blueamber.studentcalendar.modules.Injectable
 import com.blueamber.studentcalendar.ui.base.BaseDialogFragment
+import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.settings_fragment.*
 
 
@@ -51,6 +51,9 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
         dialog_close.setOnClickListener {
             dismiss()
         }
+        group_all_switch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.changeAllVisibility(isChecked)
+        }
     }
 
     override fun onStart() {
@@ -65,9 +68,9 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
     private fun updateGroups(groups: List<Groups>) {
         groups.forEach {
             val itemGroups = layoutInflater.inflate(R.layout.settings_group_item, null)
-            val switcher = itemGroups.findViewById<Switch>(R.id.group_switch)
+            val switcher = itemGroups.findViewById<SwitchMaterial>(R.id.group_switch)
             val originalGroup = itemGroups.findViewById<TextView>(R.id.group_original_name)
-            val newGroup = itemGroups.findViewById<EditText>(R.id.group_new_name)
+            val newGroup = itemGroups.findViewById<TextInputEditText>(R.id.group_new_name)
 
             switcher.isChecked = it.visibility
             originalGroup.text = it.originalGroups

@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/close"
             android:src="@drawable/ic_close"
+            android:tint="@android:color/white"
             android:padding="15dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="15dp"
@@ -30,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_title"
-            android:textColor="@color/dark_grey"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
             app:layout_constraintTop_toTopOf="@+id/dialog_close"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +57,7 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textColor="@color/dark_grey"
                     android:layout_marginTop="10dp"
                     android:text="@string/settings_group"/>
@@ -64,17 +65,40 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textColor="@color/medium_grey"
                     android:text="@string/settings_group_legendary"
                     android:layout_marginTop="5dp"/>
 
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/group_all_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:thumbTint="@color/blue"
+                        app:trackTint="@color/blue_grey"
+                        android:gravity="center"/>
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/all_groups"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+            </LinearLayout>
 
             <LinearLayout
                     android:id="@+id/list_Group"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:background="@android:color/white"
                     android:orientation="vertical"/>
 
