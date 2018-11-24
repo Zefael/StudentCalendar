@@ -16,6 +16,10 @@ import com.blueamber.studentcalendar.ui.base.BaseDialogFragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.settings_fragment.*
+import android.graphics.drawable.ColorDrawable
+import android.view.WindowManager
+
+
 
 
 class SettingsFragment : BaseDialogFragment(), Injectable {
@@ -48,6 +52,11 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
     }
 
     override fun setupViews() {
+        val window = dialog?.window
+        window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+
         dialog_close.setOnClickListener {
             dismiss()
         }
