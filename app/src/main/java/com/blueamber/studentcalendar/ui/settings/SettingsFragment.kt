@@ -17,9 +17,8 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.settings_fragment.*
 import android.graphics.drawable.ColorDrawable
+import android.view.View
 import android.view.WindowManager
-
-
 
 
 class SettingsFragment : BaseDialogFragment(), Injectable {
@@ -66,6 +65,9 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
             isSwitchAllSelected = true
             viewModel.changeAllVisibility(isChecked)
             viewModel.downloadGroups()
+        }
+        alarm_actived.setOnCheckedChangeListener { _, isChecked ->
+            alarm_parameter.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
     }
 

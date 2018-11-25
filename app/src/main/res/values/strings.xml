@@ -24,6 +24,9 @@
     <string name="rename_group_hint">Renommer le groupe</string>
     <string name="settings_title">Mes préférences</string>
     <string name="settings_group">Paramètrage des groupes</string>
-    <string name="settings_group_legendary">Vous pouvez sélectionner ou déselectionner les groupes que vous souhaitez voir affichés.\nVous pouvez également renommer les groupes</string>
+    <string name="settings_alarm_clock">Réveil matin</string>
+    <string name="settings_alarm_clock_legendary">Activer ou désactiver le réveil.</string>
+    <string name="settings_group_legendary">Vous pouvez sélectionner ou déselectionner les groupes que vous souhaitez voir affichés.\nVous pouvez également renommer les groupes.</string>
+    <string name="settings_alarm_choose_time">Temps entre votre réveil et l\'arrivée à votre fac</string>
     <string name="all_groups">Tout les groupes</string>
 </resources>
