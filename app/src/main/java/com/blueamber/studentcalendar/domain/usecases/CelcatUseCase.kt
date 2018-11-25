@@ -58,6 +58,10 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
                     )
                 )
             }
+
+            if (group == null) {
+                local.insert(Groups(groupBuilded, groupBuilded, true))
+            }
         }
         return result
     }

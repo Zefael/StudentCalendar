@@ -51,6 +51,10 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
                     )
                 )
             }
+
+            if (group == null) {
+                locale.insert(Groups(item.group, item.group, true))
+            }
         }
         return result
     }

@@ -24,6 +24,8 @@ import android.view.WindowManager
 
 class SettingsFragment : BaseDialogFragment(), Injectable {
 
+    private var isSwitchAllSelected = false
+
     companion object {
         fun show(fragmentManager: FragmentManager) {
             val dialog = SettingsFragment()
@@ -61,7 +63,9 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
             dismiss()
         }
         group_all_switch.setOnCheckedChangeListener { _, isChecked ->
+            isSwitchAllSelected = true
             viewModel.changeAllVisibility(isChecked)
+            viewModel.downloadGroups()
         }
     }
 
@@ -75,6 +79,7 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
     }
 
     private fun updateGroups(groups: List<Groups>) {
+        list_Group.removeAllViews()
         groups.forEach {
             val itemGroups = layoutInflater.inflate(R.layout.settings_group_item, null)
             val switcher = itemGroups.findViewById<SwitchMaterial>(R.id.group_switch)
@@ -82,6 +87,11 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
             val newGroup = itemGroups.findViewById<TextInputEditText>(R.id.group_new_name)
 
             switcher.isChecked = it.visibility
+            if (isSwitchAllSelected) {
+                switcher.isChecked = group_all_switch.isChecked
+            } else if (!it.visibility) {
+                group_all_switch.isChecked = false
+            }
             originalGroup.text = it.originalGroups
             newGroup.setText(it.newGroups)
 
@@ -102,5 +112,6 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
             })
             list_Group.addView(itemGroups)
         }
+        isSwitchAllSelected = false
     }
 }

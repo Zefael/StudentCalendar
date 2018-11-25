@@ -78,11 +78,10 @@
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/group_all_switch"
+                        style="@style/CustomSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:thumbTint="@color/blue"
-                        app:trackTint="@color/blue_grey"
-                        android:gravity="center"/>
+                        android:checked="true"/>
 
                 <TextView
                         android:layout_width="match_parent"

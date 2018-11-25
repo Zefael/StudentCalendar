@@ -31,11 +31,9 @@ class CalendarTasksViewModel @Inject constructor(
 
     fun downloadCalendars() = launch {
         locale.deleteTasks()
-        localeGroups.deleteGroups()
         val dataCelcat = CelcatUseCase(remoteXml, localeGroups).downloadCelcat(app)
         val dataOther = CalendarUseCase(remoteJson, localeGroups).downloadJsonCalendar()
         val tasksForInsert = sortDataDay(dataOther, dataCelcat)
-        localeGroups.insert(createListOfGroups(tasksForInsert))
         locale.insert(tasksForInsert)
         val dataDay = locale.getTasksAfterDate(DateUtil.yesterday())
         withContext(UI) { dataDownloaded.value = dataDay }
@@ -50,14 +48,5 @@ class CalendarTasksViewModel @Inject constructor(
 
     fun setToolbarTitle(title: String) {
         titleToolBar.value = title
-    }
-
-    private fun createListOfGroups(tasksList: List<TasksCalendar>): List<Groups> {
-        val result = ArrayList<Groups>()
-        tasksList.forEach {
-            val group = Groups(it.group, it.group, true)
-            result.add(group)
-        }
-        return result
     }
 }

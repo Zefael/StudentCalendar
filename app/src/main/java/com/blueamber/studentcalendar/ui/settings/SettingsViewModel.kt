@@ -23,7 +23,9 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun updateVisibility(newVisibility: Boolean, group: String) {
-        launch { locale.updateVisibility(newVisibility, group) }
+        launch {
+            locale.updateVisibility(newVisibility, group)
+        }
     }
 
     fun updateNewGroup(newGroup: String, group: String) {
