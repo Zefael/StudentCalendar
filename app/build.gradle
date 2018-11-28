@@ -17,11 +17,12 @@ android {
     }
 
     signingConfigs {
-        release {
-            keyAlias ''
-            keyPassword ''
-            storeFile file('../../KEYSTORES/.keystore')
-            storePassword ''
+
+        configRelease {
+            keyAlias 'StudCal'
+            keyPassword 'PaStudCal33'
+            storeFile file('E:/workspace/android_project/keystores/student_calendar_keystore.jks')
+            storePassword 'SudeFt5114'
         }
     }
 
@@ -29,6 +30,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.configRelease
         }
         debug {
             versionNameSuffix "-debug-"
@@ -56,7 +58,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutinesCore"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutinesAndroid"
@@ -110,7 +112,7 @@ dependencies {
     implementation "com.google.code.gson:gson:$versions.gson"
 
     // tests
-    testImplementation "junit:junit:4.12"
+    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }
