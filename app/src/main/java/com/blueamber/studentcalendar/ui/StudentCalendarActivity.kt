@@ -100,8 +100,8 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
             R.id.nav_planning -> {
                 navigationDelegate.navigate(CalendarTasksFragment())
             }
-            R.id.nav_week -> {
-            }
+//            R.id.nav_week -> {
+//            }
             R.id.nav_web -> {
                 supportFragmentManager?.let { WebviewDialog.show(it, Constants.URL_WEBSITE) }
             }
