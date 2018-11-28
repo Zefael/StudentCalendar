@@ -59,8 +59,12 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
         dialog_close.setOnClickListener {
             dismiss()
         }
-        group_all_switch.setOnCheckedChangeListener { _, _ ->
-            viewModel.changeAllVisibility()
+        activated_all_group.setOnClickListener {
+            viewModel.changeAllVisibility(true)
+            viewModel.downloadGroups()
+        }
+        desactivated_all_group.setOnClickListener {
+            viewModel.changeAllVisibility(false)
             viewModel.downloadGroups()
         }
         alarm_actived.setOnCheckedChangeListener { _, isChecked ->

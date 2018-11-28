@@ -32,7 +32,7 @@ class SettingsViewModel @Inject constructor(
         launch { locale.updateNewGroup(newGroup, group) }
     }
 
-    fun changeAllVisibility() {
-        groups.value?.forEach { it -> launch { locale.updateVisibility(true, it.originalGroups) } }
+    fun changeAllVisibility(isVisible: Boolean) {
+        groups.value?.forEach { it -> launch { locale.updateVisibility(isVisible, it.originalGroups) } }
     }
 }
