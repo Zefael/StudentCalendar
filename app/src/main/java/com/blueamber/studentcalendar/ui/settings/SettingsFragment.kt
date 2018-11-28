@@ -1,9 +1,12 @@
 package com.blueamber.studentcalendar.ui.settings
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -16,14 +19,9 @@ import com.blueamber.studentcalendar.ui.base.BaseDialogFragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.settings_fragment.*
-import android.graphics.drawable.ColorDrawable
-import android.view.View
-import android.view.WindowManager
 
 
 class SettingsFragment : BaseDialogFragment(), Injectable {
-
-    private var isSwitchAllSelected = false
 
     companion object {
         fun show(fragmentManager: FragmentManager) {
@@ -61,9 +59,8 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
         dialog_close.setOnClickListener {
             dismiss()
         }
-        group_all_switch.setOnCheckedChangeListener { _, isChecked ->
-            isSwitchAllSelected = true
-            viewModel.changeAllVisibility(isChecked)
+        group_all_switch.setOnCheckedChangeListener { _, _ ->
+            viewModel.changeAllVisibility()
             viewModel.downloadGroups()
         }
         alarm_actived.setOnCheckedChangeListener { _, isChecked ->
@@ -89,11 +86,6 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
             val newGroup = itemGroups.findViewById<TextInputEditText>(R.id.group_new_name)
 
             switcher.isChecked = it.visibility
-            if (isSwitchAllSelected) {
-                switcher.isChecked = group_all_switch.isChecked
-            } else if (!it.visibility) {
-                group_all_switch.isChecked = false
-            }
             originalGroup.text = it.originalGroups
             newGroup.setText(it.newGroups)
 
@@ -114,6 +106,5 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
             })
             list_Group.addView(itemGroups)
         }
-        isSwitchAllSelected = false
     }
 }
