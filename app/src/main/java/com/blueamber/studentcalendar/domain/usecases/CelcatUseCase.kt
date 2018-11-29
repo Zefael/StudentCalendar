@@ -12,6 +12,7 @@ import com.blueamber.studentcalendar.tools.ColorUtil
 import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.tools.FileUtil
 import org.simpleframework.xml.core.Persister
+import java.util.*
 
 class CelcatUseCase(private val remote: NetworkXmlRepository, private val local: GroupsDao) {
 
@@ -59,7 +60,9 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
                 )
             }
 
-            if (group == null) {
+            if (group == null &&
+                DateUtil.daysBetween(Calendar.getInstance().timeInMillis,
+                    DateUtil.formatDateSlash(DateUtil.addDayToDateString(event.date, event.day)).time) <= 0) {
                 local.insert(Groups(groupBuilded, groupBuilded, true))
             }
         }

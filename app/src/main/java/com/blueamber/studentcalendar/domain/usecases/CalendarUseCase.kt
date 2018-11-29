@@ -9,6 +9,7 @@ import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.models.TypeOfSource
 import com.blueamber.studentcalendar.tools.ColorUtil
 import com.blueamber.studentcalendar.tools.DateUtil
+import java.util.*
 
 class CalendarUseCase(private val remote: NetworkJsonRepository, private val locale: GroupsDao) {
 
@@ -52,7 +53,8 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
                 )
             }
 
-            if (group == null) {
+            if (group == null &&
+                DateUtil.daysBetween(Calendar.getInstance().timeInMillis, DateUtil.formatDateDashT(item.date_start).time) <= 0) {
                 locale.insert(Groups(item.group, item.group, true))
             }
         }
