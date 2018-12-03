@@ -1,10 +1,9 @@
 package com.blueamber.studentcalendar.ui.calendartasks
 
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.snackbar.Snackbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import android.view.View
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.tools.DateUtil
@@ -34,10 +33,13 @@ class CalendarTasksFragment : NavigationFragment() {
     override fun setupObservers() {
         viewModel.dataDownloaded.observe(this,
             Observer<List<TasksCalendar>> { it ->
-                val itFilter = it?.filter { (DateUtil.isToday(it.date.time) && DateUtil.isNowBeforeToTasks(it.hourEnd)) || !DateUtil.isToday(it.date.time) }
+                val itFilter = it?.filter {
+                    (DateUtil.isToday(it.date.time) && DateUtil.isNowBeforeToTasks(it.hourEnd)) || !DateUtil.isToday(it.date.time)
+                }
                 itFilter?.let {
                     adapter.update(it, true)
-                    tasks_planing.visibility = View.VISIBLE}
+                    tasks_planing.visibility = View.VISIBLE
+                }
             })
         viewModel.titleToolBar.observe(this,
             Observer { it -> it?.let { applyStatusBarTitle(it) } })

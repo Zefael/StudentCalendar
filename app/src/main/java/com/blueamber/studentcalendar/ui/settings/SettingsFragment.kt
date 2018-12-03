@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -59,17 +60,16 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
         dialog_close.setOnClickListener {
             dismiss()
         }
-        activated_all_group.setOnClickListener {
+        enable_all_group.setOnClickListener {
             viewModel.changeAllVisibility(true)
-            viewModel.downloadGroups()
         }
-        desactivated_all_group.setOnClickListener {
+        disable_all_group.setOnClickListener {
             viewModel.changeAllVisibility(false)
-            viewModel.downloadGroups()
         }
         alarm_actived.setOnCheckedChangeListener { _, isChecked ->
             alarm_parameter.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
+        reset_group.setOnClickListener { showAlertReinitGroups() }
     }
 
     override fun onStart() {
@@ -109,6 +109,25 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
             list_Group.addView(itemGroups)
+        }
+    }
+
+    private fun showAlertReinitGroups() {
+        activity?.let {
+            val builder = AlertDialog.Builder(it)
+            builder.apply {
+                setTitle(R.string.dialog_reset_group_title)
+                setMessage(R.string.dialog_reset_group_message)
+                setPositiveButton(R.string.reset) { _, _ ->
+                    viewModel.reinitAllGroups()
+                }
+                setNegativeButton(R.string.cancel) { _, _ ->
+                    //dismissed
+                }
+                builder
+                    .create()
+                    .show()
+            }
         }
     }
 }

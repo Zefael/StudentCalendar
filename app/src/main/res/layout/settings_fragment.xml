@@ -136,7 +136,7 @@
                     android:layout_marginTop="10dp">
 
                 <Button
-                        android:id="@+id/activated_all_group"
+                        android:id="@+id/enable_all_group"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
@@ -146,16 +146,26 @@
                         android:layout_marginEnd="5dp"/>
 
                 <Button
-                        android:id="@+id/desactivated_all_group"
+                        android:id="@+id/disable_all_group"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:textSize="12sp"
-                        android:text="@string/desactive_all_groups"
+                        android:text="@string/disable_all_groups"
                         android:backgroundTint="@color/colorPrimaryDark"
                         android:layout_marginStart="5dp"/>
 
             </LinearLayout>
+
+            <Button
+                    android:id="@+id/reset_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/settings_reset_groups"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:layout_marginStart="5dp"/>
 
             <LinearLayout
                     android:id="@+id/list_Group"
