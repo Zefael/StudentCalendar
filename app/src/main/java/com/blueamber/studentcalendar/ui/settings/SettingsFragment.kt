@@ -66,7 +66,7 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
         disable_all_group.setOnClickListener {
             viewModel.changeAllVisibility(false)
         }
-        alarm_actived.setOnCheckedChangeListener { _, isChecked ->
+        alarm_switch.setOnCheckedChangeListener { _, isChecked ->
             alarm_parameter.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
         reset_group.setOnClickListener { showAlertReinitGroups() }
