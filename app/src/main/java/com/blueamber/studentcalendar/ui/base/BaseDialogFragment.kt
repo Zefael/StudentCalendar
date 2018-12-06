@@ -7,7 +7,9 @@ import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import com.blueamber.studentcalendar.modules.Injectable
+import com.blueamber.studentcalendar.ui.MainViewModel
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -15,6 +17,8 @@ abstract class BaseDialogFragment : DialogFragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    protected lateinit var mainViewModel : MainViewModel
 
     override fun onAttach(context: Context) {
         if(this is Injectable) {
@@ -42,10 +46,13 @@ abstract class BaseDialogFragment : DialogFragment(), Injectable {
         else { onFragmentHide() }
     }
 
+    protected open fun setupViewModels() {
+        mainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel::class.java)
+    }
+
     protected abstract fun getLayoutId() : Int
 
     protected open fun preInit() {}
-    protected open fun setupViewModels() {}
     protected open fun setupViews() {}
     protected open fun setupObservers() {}
     protected open fun setupData() {}

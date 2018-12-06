@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blueamber.studentcalendar.R
+import com.blueamber.studentcalendar.StudentCalendarApp
 import com.blueamber.studentcalendar.models.Groups
 import com.blueamber.studentcalendar.modules.Injectable
 import com.blueamber.studentcalendar.ui.base.BaseDialogFragment
@@ -67,7 +68,13 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
             viewModel.changeAllVisibility(false)
         }
         alarm_switch.setOnCheckedChangeListener { _, isChecked ->
-            alarm_parameter.visibility = if (isChecked) View.VISIBLE else View.GONE
+            if (isChecked) {
+                alarm_parameter.visibility = View.VISIBLE
+                // TODO set alarm clock here and updated for every change of group visibility or perhaps when we close application
+            } else {
+                alarm_parameter.visibility = View.GONE
+                mainViewModel.cancelAlarmClock(context!!)
+            }
         }
         reset_group.setOnClickListener { showAlertReinitGroups() }
     }
