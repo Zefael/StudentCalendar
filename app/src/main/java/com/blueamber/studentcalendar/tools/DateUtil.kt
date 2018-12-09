@@ -6,7 +6,7 @@ import java.util.*
 
 object DateUtil {
 
-    private const val PATTERN_DATE = "dd-MM-yyyy"
+    const val PATTERN_DATE = "dd-MM-yyyy"
 
     fun yesterday(): Date {
         val result = Calendar.getInstance()

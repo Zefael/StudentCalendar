@@ -35,7 +35,7 @@
     <string name="reset">Réinitialiser</string>
     <string name="cancel">Annuler</string>
     <string name="next_alarm_set">Votre prochain réveil est programmé pour le %s</string>
-    <string name="settings_time_alarm">%02d:%02d</string>
+    <string name="time_format">%02d:%02d</string>
 
     <string name="adding_task_title">Nouvel évênement</string>
     <string name="new_task_information">Informations sur l\'évênement</string>

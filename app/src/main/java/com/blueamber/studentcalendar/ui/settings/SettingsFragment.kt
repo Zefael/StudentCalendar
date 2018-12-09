@@ -87,7 +87,7 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
                     withContext(UI) {
                         val hours = Prefs.getInt(PrefKeys.KEY_ALARM_PREPARATION_TIME_HOURS, 1)
                         val minutes = Prefs.getInt(PrefKeys.KEY_ALARM_PREPARATION_TIME_MINUTES, 0)
-                        time_ride_fac.setText(getString(R.string.settings_time_alarm, hours, minutes))
+                        time_ride_fac.setText(getString(R.string.time_format, hours, minutes))
                         next_alarm_set.text =
                                 getString(R.string.next_alarm_set, Prefs.getString(PrefKeys.KEY_ALARM_NEXT_CLOCK, ""))
                         alarm_parameter.visibility = View.VISIBLE
@@ -104,7 +104,7 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
             TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function = { view, hourOfDay, minute ->
                 Prefs.putInt(PrefKeys.KEY_ALARM_PREPARATION_TIME_HOURS, hourOfDay)
                 Prefs.putInt(PrefKeys.KEY_ALARM_PREPARATION_TIME_MINUTES, minute)
-                time_ride_fac.setText(getString(R.string.settings_time_alarm, hourOfDay, minute))
+                time_ride_fac.setText(getString(R.string.time_format, hourOfDay, minute))
                 next_alarm_set.text =
                         getString(R.string.next_alarm_set, Prefs.getString(PrefKeys.KEY_ALARM_NEXT_CLOCK, ""))
                 viewModel.getFirstTaskVisibleForUpdateAlarm()
@@ -116,7 +116,7 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
             alarm_switch.isChecked = true
             val hours = Prefs.getInt(PrefKeys.KEY_ALARM_PREPARATION_TIME_HOURS, 1)
             val minutes = Prefs.getInt(PrefKeys.KEY_ALARM_PREPARATION_TIME_MINUTES, 0)
-            time_ride_fac.setText(getString(R.string.settings_time_alarm, hours, minutes))
+            time_ride_fac.setText(getString(R.string.time_format, hours, minutes))
             next_alarm_set.text = getString(R.string.next_alarm_set, Prefs.getString(PrefKeys.KEY_ALARM_NEXT_CLOCK, ""))
         }
     }
