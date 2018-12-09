@@ -9,6 +9,8 @@ import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.ui.NavigationFragment
+import com.blueamber.studentcalendar.ui.addtask.AddTaskFragment
+import com.google.android.material.snackbar.Snackbar
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.calendar_tasks_fragment.*
 import java.util.*
@@ -27,10 +29,9 @@ class CalendarTasksFragment : NavigationFragment() {
     }
 
     override fun setupViews() {
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
+        fab.setOnClickListener { view ->
+            childFragmentManager.let { AddTaskFragment.show(it) }
+        }
     }
 
     override fun setupObservers() {

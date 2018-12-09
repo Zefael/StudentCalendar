@@ -7,7 +7,6 @@
     <string name="nav_header_subtitle">Bordeaux - Bio-infoformatique</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="nav_planning">Planning</string>
-    <string name="nav_week">Semaine</string>
     <string name="nav_web">Accès au site</string>
     <string name="nav_parameter">Paramètres</string>
 
@@ -37,4 +36,15 @@
     <string name="cancel">Annuler</string>
     <string name="next_alarm_set">Votre prochain réveil est programmé pour le %s</string>
     <string name="settings_time_alarm">%02d:%02d</string>
+
+    <string name="adding_task_title">Nouvel évênement</string>
+    <string name="new_task_information">Informations sur l\'évênement</string>
+    <string name="new_task_title_hint">Nom de l\'évênement *</string>
+    <string name="new_task_date_hint">Date de l\'évênement *</string>
+    <string name="new_task_hours_start_hint">Heure de début *</string>
+    <string name="new_task_hours_end_hint">Heure de fin *</string>
+    <string name="new_task_comment_hint">Ajouter un commentaire</string>
+    <string name="new_task_place_hint">Bâtiment/Salle</string>
+    <string name="new_task_save">Sauvegarder</string>
+    <string name="new_task_added">Ajouter</string>
 </resources>

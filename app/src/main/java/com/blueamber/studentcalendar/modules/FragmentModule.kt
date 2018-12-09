@@ -1,5 +1,6 @@
 package com.blueamber.studentcalendar.modules
 
+import com.blueamber.studentcalendar.ui.addtask.AddTaskFragment
 import com.blueamber.studentcalendar.ui.calendartasks.CalendarTasksFragment
 import com.blueamber.studentcalendar.ui.settings.SettingsFragment
 import dagger.Module
@@ -14,4 +15,6 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeSettngs(): SettingsFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeAddTask(): AddTaskFragment
 }

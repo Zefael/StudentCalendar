@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.blueamber.studentcalendar.modules.viewmodel.ViewModelFactory
 import com.blueamber.studentcalendar.modules.viewmodel.ViewModelKey
+import com.blueamber.studentcalendar.ui.addtask.AddTaskViewModel
 import com.blueamber.studentcalendar.ui.calendartasks.CalendarTasksViewModel
 import com.blueamber.studentcalendar.ui.settings.SettingsViewModel
 import dagger.Binds
@@ -25,5 +26,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SettingsViewModel::class)
     abstract fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddTaskViewModel::class)
+    abstract fun bindAddTaskViewModel(viewModel: AddTaskViewModel): ViewModel
 
 }
