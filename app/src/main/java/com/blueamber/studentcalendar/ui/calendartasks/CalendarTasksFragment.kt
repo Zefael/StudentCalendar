@@ -4,11 +4,14 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blueamber.studentcalendar.PrefKeys
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.tools.DateUtil
 import com.blueamber.studentcalendar.ui.NavigationFragment
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.calendar_tasks_fragment.*
+import java.util.*
 
 class CalendarTasksFragment : NavigationFragment() {
 
@@ -40,6 +43,9 @@ class CalendarTasksFragment : NavigationFragment() {
                     adapter.update(it, true)
                     tasks_planing.visibility = View.VISIBLE
                 }
+                if (Prefs.getBoolean(PrefKeys.KEY_ALARM_IS_ACTIVATED, false)) {
+                    viewModel.getFirstTaskVisibleForUpdateAlarm()
+                }
             })
         viewModel.titleToolBar.observe(this,
             Observer { it -> it?.let { applyStatusBarTitle(it) } })
@@ -48,6 +54,8 @@ class CalendarTasksFragment : NavigationFragment() {
                 tasks_planing.visibility = View.GONE
                 viewModel.downloadCalendars()
             })
+        viewModel.firstTaskVisible.observe(this,
+            Observer<TasksCalendar> { it -> it?.let { updateAlarmClock(it) } })
     }
 
     override fun setupData() {
@@ -56,5 +64,15 @@ class CalendarTasksFragment : NavigationFragment() {
         adapter = CalendarTasksAdapter(manager, viewModel)
         tasks_planing.layoutManager = manager
         tasks_planing.adapter = adapter
+    }
+
+    private fun updateAlarmClock(firstTask: TasksCalendar) {
+        val hours = Prefs.getInt(PrefKeys.KEY_ALARM_PREPARATION_TIME_HOURS, 1)
+        val minute = Prefs.getInt(PrefKeys.KEY_ALARM_PREPARATION_TIME_MINUTES, 0)
+        val calendar = Calendar.getInstance()
+        calendar.time = firstTask.date
+        calendar.add(Calendar.HOUR, -hours)
+        calendar.add(Calendar.MINUTE, -minute)
+        mainViewModel.updateAlarmClock(requireContext(), calendar)
     }
 }

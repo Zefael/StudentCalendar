@@ -18,8 +18,6 @@ abstract class BaseDialogFragment : DialogFragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    protected lateinit var mainViewModel : MainViewModel
-
     override fun onAttach(context: Context) {
         if(this is Injectable) {
             AndroidSupportInjection.inject(this)
@@ -46,12 +44,8 @@ abstract class BaseDialogFragment : DialogFragment(), Injectable {
         else { onFragmentHide() }
     }
 
-    protected open fun setupViewModels() {
-        mainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel::class.java)
-    }
-
     protected abstract fun getLayoutId() : Int
-
+    protected open fun setupViewModels() {}
     protected open fun preInit() {}
     protected open fun setupViews() {}
     protected open fun setupObservers() {}

@@ -62,13 +62,13 @@ interface TasksCalendarDao : BaseDao<TasksCalendar> {
     @Query("DELETE FROM TasksCalendar")
     fun deleteTasks()
 
+    @Query("SELECT * FROM TasksCalendar INNER JOIN Groups ON TasksCalendar.`group` = Groups.newGroups WHERE Groups.visibility = 1 AND TasksCalendar.date > :dateBegin LIMIT 1")
+    fun getFirstTask(dateBegin: Date): TasksCalendar
+
     // ** Special content provider ** //
 
     @Query("SELECT * FROM TasksCalendar WHERE date > :dateBegin AND date < :dateEnd")
     fun selectAllBeginTodayForTwoWeek(dateBegin: Date, dateEnd: Date): Cursor
-
-    @Query("SELECT COUNT(*) FROM TasksCalendar")
-    fun countTasksWithData(): Cursor
 }
 
 @Dao

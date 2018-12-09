@@ -7,10 +7,13 @@ import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.blueamber.studentcalendar.Constants
+import com.blueamber.studentcalendar.PrefKeys
 import com.blueamber.studentcalendar.StudentCalendarApp
+import com.blueamber.studentcalendar.tools.DateUtil
 import com.emas.mondial.ui.main.Back
 import com.emas.mondial.ui.main.LoadFragment
 import com.emas.mondial.ui.main.NavigationState
+import com.pixplicity.easyprefs.library.Prefs
 import java.util.*
 
 class MainViewModel : ViewModel() {
@@ -42,17 +45,17 @@ class MainViewModel : ViewModel() {
     }
 
     fun updateAlarmClock(context: Context, calendar: Calendar) {
-        if (alarmMgr == null) {
-            initAlarmMgn(context)
-        } else {
+        if (alarmMgr != null) {
             cancelAlarmClock(context)
         }
+        initAlarmMgn(context)
         alarmMgr?.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
             1000 * 60 * Constants.TIME_TO_REPEATING_ALARM_IN_MINUTE,
-            alarmIntent
-        )
+            alarmIntent)
+        Prefs.putBoolean(PrefKeys.KEY_ALARM_IS_ACTIVATED, true)
+        Prefs.putString(PrefKeys.KEY_ALARM_NEXT_CLOCK, DateUtil.calendarToString(calendar.timeInMillis))
     }
 
     fun cancelAlarmClock(context: Context) {
@@ -60,6 +63,7 @@ class MainViewModel : ViewModel() {
             initAlarmMgn(context)
         }
         alarmMgr?.cancel(alarmIntent)
+        Prefs.putBoolean(PrefKeys.KEY_ALARM_IS_ACTIVATED, false)
     }
 
     private fun initAlarmMgn(context: Context) {

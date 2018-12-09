@@ -106,7 +106,7 @@ class StudentCalendarActivity : BaseActivity(), NavigationView.OnNavigationItemS
                 supportFragmentManager?.let { WebviewDialog.show(it, Constants.URL_WEBSITE) }
             }
             R.id.nav_parameter -> {
-                supportFragmentManager?.let { SettingsFragment.show(it) }
+                supportFragmentManager?.let { SettingsFragment.show(it, mainViewModel) }
             }
             else -> return false
         }

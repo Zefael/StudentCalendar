@@ -35,5 +35,6 @@
     <string name="dialog_reset_group_message">En réinitialisant tout les groupes, le renommage et la visibilité des groupes seront remis à zéro.\nSouhaitez-vous toujours réinitialiser les groupes ?</string>
     <string name="reset">Réinitialiser</string>
     <string name="cancel">Annuler</string>
-    <string name="next_alarm_set">Votre prochain réveil est programmé pour le %s à %s</string>
+    <string name="next_alarm_set">Votre prochain réveil est programmé pour le %s</string>
+    <string name="settings_time_alarm">%02d:%02d</string>
 </resources>

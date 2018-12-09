@@ -4,11 +4,14 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.blueamber.studentcalendar.domain.local.GroupsDao
+import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
 import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
 import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
 import com.blueamber.studentcalendar.models.Groups
+import com.blueamber.studentcalendar.models.TasksCalendar
+import com.blueamber.studentcalendar.tools.DateUtil
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
@@ -18,10 +21,12 @@ class SettingsViewModel @Inject constructor(
     private val app: Application,
     private val remoteXml: NetworkXmlRepository,
     private val remoteJson: NetworkJsonRepository,
-    private val localeGroups: GroupsDao
+    private val localeGroups: GroupsDao,
+    private val localeTasks: TasksCalendarDao
 ) : ViewModel() {
 
     val groups = MutableLiveData<List<Groups>>()
+    val firstTaskVisible = MutableLiveData<TasksCalendar>()
 
     fun downloadGroups() = launch {
         val result = localeGroups.getGroups()
@@ -37,14 +42,18 @@ class SettingsViewModel @Inject constructor(
     fun changeAllVisibility(isVisible: Boolean) = launch {
         groups.value?.forEach { it -> localeGroups.updateVisibility(isVisible, it.originalGroups) }
         downloadGroups()
+        getFirstTaskVisibleForUpdateAlarm()
     }
 
-    fun reinitAllGroups() {
-        launch {
-            localeGroups.deleteGroups()
-            CelcatUseCase(remoteXml, localeGroups).downloadCelcat(app)
-            CalendarUseCase(remoteJson, localeGroups).downloadJsonCalendar()
-            downloadGroups()
-        }
+    fun resetAllGroups() = launch {
+        localeGroups.deleteGroups()
+        CelcatUseCase(remoteXml, localeGroups).downloadCelcat(app)
+        CalendarUseCase(remoteJson, localeGroups).downloadJsonCalendar()
+        downloadGroups()
+    }
+
+    fun getFirstTaskVisibleForUpdateAlarm() = launch {
+        val result = localeTasks.getFirstTask(DateUtil.yesterday())
+        withContext(UI) { firstTaskVisible.value = result }
     }
 }

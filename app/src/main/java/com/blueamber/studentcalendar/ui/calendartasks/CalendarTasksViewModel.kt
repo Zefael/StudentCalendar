@@ -28,6 +28,7 @@ class CalendarTasksViewModel @Inject constructor(
 
     val dataDownloaded = MutableLiveData<List<TasksCalendar>>()
     val titleToolBar = MutableLiveData<String>()
+    val firstTaskVisible = MutableLiveData<TasksCalendar>()
 
     fun downloadCalendars() = launch {
         locale.deleteTasks()
@@ -48,5 +49,10 @@ class CalendarTasksViewModel @Inject constructor(
 
     fun setToolbarTitle(title: String) {
         titleToolBar.value = title
+    }
+
+    fun getFirstTaskVisibleForUpdateAlarm() = launch {
+        val result = locale.getFirstTask(DateUtil.yesterday())
+        withContext(UI) { firstTaskVisible.value = result }
     }
 }

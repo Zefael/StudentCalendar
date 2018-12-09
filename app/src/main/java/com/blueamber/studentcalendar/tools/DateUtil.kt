@@ -153,4 +153,16 @@ object DateUtil {
             date
         }
     }
+
+    fun calendarToString(date: Long): String {
+        return try {
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = date
+            val sdf = SimpleDateFormat("EE dd MMM yyyy à HH:mm", Locale.FRANCE)
+            sdf.format(cal.time)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            ""
+        }
+    }
 }
