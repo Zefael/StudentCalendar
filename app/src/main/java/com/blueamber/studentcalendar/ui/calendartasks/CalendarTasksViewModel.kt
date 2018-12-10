@@ -34,17 +34,10 @@ class CalendarTasksViewModel @Inject constructor(
         locale.deleteTasks()
         val dataCelcat = CelcatUseCase(remoteXml, localeGroups).downloadCelcat(app)
         val dataOther = CalendarUseCase(remoteJson, localeGroups).downloadJsonCalendar()
-        val tasksForInsert = sortDataDay(dataOther, dataCelcat)
-        locale.insert(tasksForInsert)
+        locale.insert(dataCelcat)
+        locale.insert(dataOther)
         val dataDay = locale.getTasksAfterDate(DateUtil.yesterday())
-        withContext(UI) { dataDownloaded.value = dataDay }
-    }
-
-    private fun sortDataDay(data1: List<TasksCalendar>, data2: List<TasksCalendar>): List<TasksCalendar> {
-        val result = ArrayList<TasksCalendar>()
-        result.addAll(data1)
-        result.addAll(data2)
-        return result.sorted()
+        withContext(UI) { dataDownloaded.value = dataDay.sorted() }
     }
 
     fun setToolbarTitle(title: String) {

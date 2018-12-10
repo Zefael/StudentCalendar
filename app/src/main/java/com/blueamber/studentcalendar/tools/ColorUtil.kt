@@ -19,6 +19,7 @@ object ColorUtil {
         return when (typeOfSource) {
             TypeOfSource.CELCAT -> R.color.blue_light
             TypeOfSource.OTHER -> R.color.orange
+            TypeOfSource.PERSONAL -> R.color.colorAccent
         }
     }
 
@@ -26,6 +27,7 @@ object ColorUtil {
         return when (typeOfSource) {
             TypeOfSource.CELCAT -> R.color.blue
             TypeOfSource.OTHER -> R.color.red
+            TypeOfSource.PERSONAL -> R.color.colorAccent
         }
     }
 
@@ -33,6 +35,7 @@ object ColorUtil {
         return when (typeOfSource) {
             TypeOfSource.CELCAT -> R.color.blue
             TypeOfSource.OTHER -> R.color.red
+            TypeOfSource.PERSONAL -> R.color.colorAccent
         }
     }
 }

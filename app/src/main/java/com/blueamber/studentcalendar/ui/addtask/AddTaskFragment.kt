@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.DatePicker
@@ -53,6 +54,7 @@ class AddTaskFragment : BaseDialogFragment(), Injectable {
             dismiss()
         }
         new_event_date.setOnClickListener {
+            new_event_error.visibility = View.GONE
             DatePickerDialog(
                 context, dateSetListener,
                 Calendar.getInstance().get(Calendar.YEAR),
@@ -61,24 +63,26 @@ class AddTaskFragment : BaseDialogFragment(), Injectable {
             ).show()
         }
         new_event_hours_start.setOnClickListener {
+            new_event_error.visibility = View.GONE
             TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function = { view, hourOfDay, minute ->
                 new_event_hours_start.setText(getString(R.string.time_format, hourOfDay, minute))
                 viewModel.updateHoursStart(getString(R.string.time_format, hourOfDay, minute))
             }), 0, 0, true).show()
         }
         new_event_hours_end.setOnClickListener {
+            new_event_error.visibility = View.GONE
             TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function = { view, hourOfDay, minute ->
                 new_event_hours_end.setText(getString(R.string.time_format, hourOfDay, minute))
                 viewModel.updateHoursEnd(getString(R.string.time_format, hourOfDay, minute))
             }), 0, 0, true).show()
         }
         new_event_save.setOnClickListener {
-            if (new_event_title.text.isNullOrEmpty() || new_event_date.text.isNullOrEmpty() ||
-                new_event_hours_start.text.isNullOrEmpty() || new_event_hours_end.text.isNullOrEmpty() ||
-                new_event_place.text.isNullOrEmpty()) {
-
+            new_event_error.visibility = View.GONE
+            if (viewModel.isDataValidate(new_event_title.text.toString(),
+                    new_event_place.text.toString(), new_event_note.text.toString())) {
+                dismiss()
             } else {
-
+                new_event_error.visibility = View.VISIBLE
             }
         }
     }

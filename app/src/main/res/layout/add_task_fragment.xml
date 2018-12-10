@@ -61,6 +61,16 @@
                         android:textSize="16sp"
                         android:textColor="@color/dark_grey"/>
 
+                <TextView
+                        android:id="@+id/new_event_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/new_task_error"
+                        android:textSize="16sp"
+                        android:textColor="@color/red"
+                        android:visibility="gone"/>
+
                 <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

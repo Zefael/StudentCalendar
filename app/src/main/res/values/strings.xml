@@ -44,7 +44,8 @@
     <string name="new_task_hours_start_hint">Heure de début *</string>
     <string name="new_task_hours_end_hint">Heure de fin *</string>
     <string name="new_task_comment_hint">Ajouter un commentaire</string>
-    <string name="new_task_place_hint">Bâtiment/Salle</string>
+    <string name="new_task_place_hint">Bâtiment/Salle *</string>
     <string name="new_task_save">Sauvegarder</string>
     <string name="new_task_added">Ajouter</string>
+    <string name="new_task_error">Erreur : Un des champs obligatoires n\'est pas rempli.</string>
 </resources>
