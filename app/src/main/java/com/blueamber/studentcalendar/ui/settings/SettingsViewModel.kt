@@ -10,8 +10,6 @@ import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
 import com.blueamber.studentcalendar.models.Groups
-import com.blueamber.studentcalendar.models.TasksCalendar
-import com.blueamber.studentcalendar.tools.DateUtil
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
@@ -26,7 +24,6 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val groups = MutableLiveData<List<Groups>>()
-    val firstTaskVisible = MutableLiveData<TasksCalendar>()
 
     fun downloadGroups() = launch {
         val result = localeGroups.getGroups()
@@ -42,7 +39,6 @@ class SettingsViewModel @Inject constructor(
     fun changeAllVisibility(isVisible: Boolean) = launch {
         groups.value?.forEach { it -> localeGroups.updateVisibility(isVisible, it.originalGroups) }
         downloadGroups()
-        getFirstTaskVisibleForUpdateAlarm()
     }
 
     fun resetAllGroups() = launch {
@@ -50,10 +46,5 @@ class SettingsViewModel @Inject constructor(
         CelcatUseCase(remoteXml, localeGroups).downloadCelcat(app)
         CalendarUseCase(remoteJson, localeGroups).downloadJsonCalendar()
         downloadGroups()
-    }
-
-    fun getFirstTaskVisibleForUpdateAlarm() = launch {
-        val result = localeTasks.getFirstTask(DateUtil.yesterday())
-        withContext(UI) { firstTaskVisible.value = result }
     }
 }

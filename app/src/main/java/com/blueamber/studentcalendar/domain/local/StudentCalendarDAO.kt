@@ -62,9 +62,6 @@ interface TasksCalendarDao : BaseDao<TasksCalendar> {
     @Query("DELETE FROM TasksCalendar WHERE type!=\"personnel\"")
     fun deleteTasks()
 
-    @Query("SELECT * FROM TasksCalendar INNER JOIN Groups ON TasksCalendar.`group` = Groups.newGroups WHERE Groups.visibility = 1 AND TasksCalendar.date > :dateBegin LIMIT 1")
-    fun getFirstTask(dateBegin: Date): TasksCalendar
-
     // ** Special content provider ** //
 
     @Query("SELECT * FROM TasksCalendar WHERE date > :dateBegin AND date < :dateEnd")
