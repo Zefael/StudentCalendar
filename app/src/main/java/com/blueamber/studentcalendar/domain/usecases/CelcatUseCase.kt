@@ -5,6 +5,7 @@ import android.util.Log
 import com.blueamber.studentcalendar.domain.local.GroupsDao
 import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.CelcatXmlDto
+import com.blueamber.studentcalendar.domain.remote.dtos.celcatxml.EventDto
 import com.blueamber.studentcalendar.models.Groups
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.models.TypeOfSource
@@ -20,11 +21,15 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
         return try {
             val request = remote.getCelcat()
             val response = request.await()
-            if (request.isCompleted) {
+            val requestLicense = remote.getCelcatLicense()
+            val responseLicense = requestLicense.await()
+            if (request.isCompleted && requestLicense.isCompleted) {
                 val serializer = Persister()
-                val source = FileUtil.writeResponseBodyToDisk(context, response.body(), "calendrier_semestre.xml")
-                val semestre = serializer.read<CelcatXmlDto>(CelcatXmlDto::class.java, source)
-                convert(semestre, local.getGroups())
+                val source1 = FileUtil.writeResponseBodyToDisk(context, response.body(), "calendrier_semestre.xml")
+                val source2 = FileUtil.writeResponseBodyToDisk(context, responseLicense.body(), "calendrier_semestre_license.xml")
+                val semestre = serializer.read<CelcatXmlDto>(CelcatXmlDto::class.java, source1)
+                val semestreLicense = serializer.read<CelcatXmlDto>(CelcatXmlDto::class.java, source2)
+                convert(semestre, semestreLicense, local.getGroups())
             } else emptyList()
         } catch (exception: Exception) {
             Log.e(
@@ -35,11 +40,20 @@ class CelcatUseCase(private val remote: NetworkXmlRepository, private val local:
         }
     }
 
-    private fun convert(celcatXmlDto: CelcatXmlDto, groups: List<Groups>): List<TasksCalendar> {
+    private fun convert(celcatXmlDto: CelcatXmlDto, celcatLicenseXmlDto: CelcatXmlDto, groups: List<Groups>): List<TasksCalendar> {
         val result = ArrayList<TasksCalendar>()
         val sortedCelcat = celcatXmlDto.event.sortedWith(compareBy { it.date })
+        val sortedCelcatLicense = celcatLicenseXmlDto.event.sortedWith(compareBy { it.date })
 
-        for (event in sortedCelcat) {
+        result.addAll(addToListForResult(sortedCelcat, groups))
+        result.addAll(addToListForResult(sortedCelcatLicense, groups))
+
+        return result
+    }
+
+    private fun addToListForResult(sortedData: List<EventDto>, groups: List<Groups>) : List<TasksCalendar> {
+        val result = ArrayList<TasksCalendar>()
+        for (event in sortedData) {
             val groupBuilded = buildListItemToString(event.resources.groups)
             val group = groups.find { it.originalGroups == groupBuilded }
             if (group?.visibility ?: true) {

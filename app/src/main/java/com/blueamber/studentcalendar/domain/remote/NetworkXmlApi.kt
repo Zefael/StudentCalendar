@@ -9,4 +9,7 @@ interface NetworkXmlApi {
 
     @GET("https://edt-st.u-bordeaux.fr/etudiants/Master/Master1/Semestre1/g267904.xml")
     fun getCelcatDto(): Deferred<Response<ResponseBody>>
+
+    @GET("https://edt-st.u-bordeaux.fr/etudiants/Licence/Semestre2/g295769.xml")
+    fun getCelcatLicenseDto(): Deferred<Response<ResponseBody>>
 }

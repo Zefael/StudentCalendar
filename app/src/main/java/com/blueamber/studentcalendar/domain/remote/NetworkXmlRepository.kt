@@ -8,4 +8,6 @@ import javax.inject.Inject
 class NetworkXmlRepository @Inject constructor(private val xmlApi: NetworkXmlApi) {
 
     fun getCelcat(): Deferred<Response<ResponseBody>> = xmlApi.getCelcatDto()
+
+    fun getCelcatLicense(): Deferred<Response<ResponseBody>> = xmlApi.getCelcatLicenseDto()
 }
