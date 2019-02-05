@@ -18,6 +18,7 @@ data class TasksCalendar(val date: Date,
                          val hourEnd: String,
                          val professors: String,
                          val rooms: String,
+                         val primaryGroup: String,
                          val group: String,
                          val notes: String) : Parcelable, Comparable<TasksCalendar> {
 

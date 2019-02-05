@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blueamber.studentcalendar.R
 import com.blueamber.studentcalendar.models.Groups
+import com.blueamber.studentcalendar.models.PrimaryGroups
 import com.blueamber.studentcalendar.modules.Injectable
 import com.blueamber.studentcalendar.ui.MainViewModel
 import com.blueamber.studentcalendar.ui.base.BaseDialogFragment
@@ -46,7 +47,9 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
 
     override fun setupObservers() {
         viewModel.groups.observe(this,
-            Observer<List<Groups>> { it -> it?.let { updateGroups(it) } })
+            Observer<List<Groups>> {it?.let { updateGroups(it) } })
+        viewModel.primaryGroups.observe(this,
+            Observer<List<PrimaryGroups>> { it?.let { updatePrimaryGroups(it) }})
     }
 
     override fun preInit() {
@@ -81,7 +84,7 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
     }
 
     private fun updateGroups(groups: List<Groups>) {
-        list_Group.removeAllViews()
+        list_group.removeAllViews()
         groups.forEach {
             val itemGroups = layoutInflater.inflate(R.layout.settings_group_item, null)
             val switcher = itemGroups.findViewById<SwitchMaterial>(R.id.group_switch)
@@ -93,7 +96,7 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
             newGroup.setText(it.newGroups)
 
             switcher.setOnCheckedChangeListener { _, isChecked ->
-                viewModel.updateVisibility(isChecked, it.originalGroups)
+                viewModel.updateVisibilityGroup(isChecked, it.originalGroups)
             }
 
             newGroup.addTextChangedListener(object : TextWatcher {
@@ -107,7 +110,38 @@ class SettingsFragment : BaseDialogFragment(), Injectable {
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
-            list_Group.addView(itemGroups)
+            list_group.addView(itemGroups)
+        }
+    }
+
+    private fun updatePrimaryGroups(primaryGroups: List<PrimaryGroups>) {
+        list_primary_group.removeAllViews()
+        primaryGroups.forEach {
+            val itemGroups = layoutInflater.inflate(R.layout.settings_group_item, null)
+            val switcher = itemGroups.findViewById<SwitchMaterial>(R.id.group_switch)
+            val originalGroup = itemGroups.findViewById<TextView>(R.id.group_original_name)
+            val newGroup = itemGroups.findViewById<TextInputEditText>(R.id.group_new_name)
+
+            switcher.isChecked = it.visibility
+            originalGroup.text = it.originalPrimaryGroup
+            newGroup.setText(it.newPrimaryGroup)
+
+            switcher.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.updateVisibilityPrimaryGroup(isChecked, it.originalPrimaryGroup)
+            }
+
+            newGroup.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    if (!s.isNullOrEmpty()) {
+                        viewModel.updateNewPrimaryGroup(s.toString(), it.originalPrimaryGroup)
+                    }
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
+            list_primary_group.addView(itemGroups)
         }
     }
 

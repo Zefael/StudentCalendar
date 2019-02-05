@@ -4,12 +4,13 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.blueamber.studentcalendar.domain.local.GroupsDao
-import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
+import com.blueamber.studentcalendar.domain.local.PrimaryGroupsDao
 import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
 import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
 import com.blueamber.studentcalendar.models.Groups
+import com.blueamber.studentcalendar.models.PrimaryGroups
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
@@ -20,21 +21,32 @@ class SettingsViewModel @Inject constructor(
     private val remoteXml: NetworkXmlRepository,
     private val remoteJson: NetworkJsonRepository,
     private val localeGroups: GroupsDao,
-    private val localeTasks: TasksCalendarDao
+    private val localePrimaryGroups: PrimaryGroupsDao
 ) : ViewModel() {
 
     val groups = MutableLiveData<List<Groups>>()
+    val primaryGroups = MutableLiveData<List<PrimaryGroups>>()
 
     fun downloadGroups() = launch {
-        val result = localeGroups.getGroups()
-        withContext(UI) { groups.value = result }
+        val resultGroups = localeGroups.getGroups()
+        val resultPrimaryGroups = localePrimaryGroups.getPrimaryGroups()
+        withContext(UI) {
+            groups.value = resultGroups
+            primaryGroups.value = resultPrimaryGroups
+        }
     }
 
-    fun updateVisibility(newVisibility: Boolean, group: String) = launch {
+    fun updateVisibilityGroup(newVisibility: Boolean, group: String) = launch {
         localeGroups.updateVisibility(newVisibility, group)
     }
 
+    fun updateVisibilityPrimaryGroup(newVisibility: Boolean, group: String) = launch {
+        localePrimaryGroups.updateVisibility(newVisibility, group)
+    }
+
     fun updateNewGroup(newGroup: String, group: String) = launch { localeGroups.updateNewGroup(newGroup, group) }
+
+    fun updateNewPrimaryGroup(newGroup: String, group: String) = launch { localePrimaryGroups.updateNewPrimaryGroup(newGroup, group) }
 
     fun changeAllVisibility(isVisible: Boolean) = launch {
         groups.value?.forEach { it -> localeGroups.updateVisibility(isVisible, it.originalGroups) }
@@ -43,8 +55,8 @@ class SettingsViewModel @Inject constructor(
 
     fun resetAllGroups() = launch {
         localeGroups.deleteGroups()
-        CelcatUseCase(remoteXml, localeGroups).downloadCelcat(app)
-        CalendarUseCase(remoteJson, localeGroups).downloadJsonCalendar()
+        CelcatUseCase(remoteXml, localeGroups, localePrimaryGroups).downloadCelcat(app)
+        CalendarUseCase(remoteJson, localeGroups, localePrimaryGroups).downloadJsonCalendar()
         downloadGroups()
     }
 }

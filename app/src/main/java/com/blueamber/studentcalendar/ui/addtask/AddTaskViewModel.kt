@@ -3,12 +3,9 @@ package com.blueamber.studentcalendar.ui.addtask
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.blueamber.studentcalendar.R
-import com.blueamber.studentcalendar.domain.local.GroupsDao
 import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.models.TypeOfSource
-import com.blueamber.studentcalendar.tools.ColorUtil
-import kotlinx.android.synthetic.main.add_task_fragment.*
 import kotlinx.coroutines.experimental.launch
 import java.util.*
 import javax.inject.Inject
@@ -41,6 +38,7 @@ class AddTaskViewModel @Inject constructor(
                 hoursEnd,
                 "",
                 place,
+                "perso",
                 "perso",
                 comment)
             launch { localeTasks.insert(newTask) }

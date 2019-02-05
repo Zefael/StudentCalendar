@@ -4,18 +4,17 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.blueamber.studentcalendar.domain.local.GroupsDao
+import com.blueamber.studentcalendar.domain.local.PrimaryGroupsDao
 import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
 import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
 import com.blueamber.studentcalendar.domain.remote.NetworkXmlRepository
 import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
-import com.blueamber.studentcalendar.models.Groups
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.tools.DateUtil
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
-import java.util.*
 import javax.inject.Inject
 
 class CalendarTasksViewModel @Inject constructor(
@@ -23,6 +22,7 @@ class CalendarTasksViewModel @Inject constructor(
     private val remoteXml: NetworkXmlRepository,
     private val remoteJson: NetworkJsonRepository,
     private val locale: TasksCalendarDao,
+    private val localePrimaryGroups: PrimaryGroupsDao,
     private val localeGroups: GroupsDao
 ) : ViewModel() {
 
@@ -31,8 +31,8 @@ class CalendarTasksViewModel @Inject constructor(
 
     fun downloadCalendars() = launch {
         locale.deleteTasks()
-        val dataCelcat = CelcatUseCase(remoteXml, localeGroups).downloadCelcat(app)
-        val dataOther = CalendarUseCase(remoteJson, localeGroups).downloadJsonCalendar()
+        val dataCelcat = CelcatUseCase(remoteXml, localeGroups, localePrimaryGroups).downloadCelcat(app)
+        val dataOther = CalendarUseCase(remoteJson, localeGroups, localePrimaryGroups).downloadJsonCalendar()
         locale.insert(dataCelcat)
         locale.insert(dataOther)
         val dataDay = locale.getTasksAfterDate(DateUtil.yesterday())

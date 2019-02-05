@@ -3,6 +3,7 @@ package com.blueamber.studentcalendar.modules
 import androidx.room.Room
 import android.content.Context
 import com.blueamber.studentcalendar.domain.local.GroupsDao
+import com.blueamber.studentcalendar.domain.local.PrimaryGroupsDao
 import com.blueamber.studentcalendar.domain.local.StudentCalendarDatabase
 import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
 import dagger.Module
@@ -31,5 +32,11 @@ class DaoModule {
     @Provides
     fun provideGroupsDao(studentCalendarDatabase: StudentCalendarDatabase): GroupsDao {
         return studentCalendarDatabase.groupsDao()
+    }
+
+    @Singleton
+    @Provides
+    fun providePrimaryGroupsDao(studentCalendarDatabase: StudentCalendarDatabase): PrimaryGroupsDao {
+        return studentCalendarDatabase.primaryGroupsDao()
     }
 }
