@@ -3,6 +3,7 @@ package com.blueamber.studentcalendar.domain.local
 import androidx.room.*
 import android.database.Cursor
 import com.blueamber.studentcalendar.models.Groups
+import com.blueamber.studentcalendar.models.PrimaryGroups
 import com.blueamber.studentcalendar.models.TasksCalendar
 import java.util.*
 
@@ -62,9 +63,6 @@ interface TasksCalendarDao : BaseDao<TasksCalendar> {
     @Query("DELETE FROM TasksCalendar WHERE type!=\"personnel\"")
     fun deleteTasks()
 
-    @Query("SELECT * FROM TasksCalendar INNER JOIN Groups ON TasksCalendar.`group` = Groups.newGroups WHERE Groups.visibility = 1 AND TasksCalendar.date > :dateBegin LIMIT 1")
-    fun getFirstTask(dateBegin: Date): TasksCalendar
-
     // ** Special content provider ** //
 
     @Query("SELECT * FROM TasksCalendar WHERE date > :dateBegin AND date < :dateEnd")
@@ -88,4 +86,23 @@ interface GroupsDao : BaseDao<Groups> {
 
     @Query("UPDATE Groups SET newGroups = :newGroup WHERE originalGroups = :group")
     fun updateNewGroup(newGroup: String, group: String)
+}
+
+@Dao
+interface PrimaryGroupsDao : BaseDao<PrimaryGroups> {
+
+    @Query("SELECT * FROM PrimaryGroups")
+    fun getPrimaryGroups(): List<PrimaryGroups>
+
+    @Query("DELETE FROM PrimaryGroups")
+    fun deletePrimaryGroups()
+
+    @Query("SELECT newPrimaryGroup FROM PrimaryGroups WHERE originalPrimaryGroup = :group")
+    fun getNewPrimaryGroupsByOriginal(group: String): String
+
+    @Query("UPDATE PrimaryGroups SET visibility = :newVisibility WHERE originalPrimaryGroup = :group")
+    fun updateVisibility(newVisibility: Boolean, group: String)
+
+    @Query("UPDATE PrimaryGroups SET newPrimaryGroup = :newPrimaryGroup WHERE originalPrimaryGroup = :primaryGroup")
+    fun updateNewPrimaryGroup(newPrimaryGroup: String, primaryGroup: String)
 }

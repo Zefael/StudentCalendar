@@ -51,6 +51,7 @@ class CalendarTasksAdapter(
                 hours_start_end.text = context.resources.getString(R.string.hours_start_end, it.hourStart, it.hourEnd)
                 place.text = it.rooms
                 groups.text = it.group
+                primary_group.text = it.primaryGroup
                 if (!it.notes.isEmpty()) {
                     notes.visibility = View.VISIBLE
                     notes.text = context.resources.getString(R.string.notes_event, it.notes)

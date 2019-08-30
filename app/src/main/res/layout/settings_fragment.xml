@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@android:color/white">
 
     <View
@@ -58,78 +58,26 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/dark_grey"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/settings_alarm_clock"/>
+                    android:textSize="14sp"
+                    android:textColor="@color/medium_grey"
+                    android:text="@string/settings_group_legendary"
+                    android:layout_marginTop="5dp"/>
 
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/alarm_switch"
-                        style="@style/CustomSwitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="false"/>
-
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/settings_alarm_clock_legendary"
-                        android:textStyle="bold"
-                        android:textSize="14sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:id="@+id/alarm_parameter"
+            <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    tools:visibility="visible">
+                    android:textSize="16sp"
+                    android:textColor="@color/dark_grey"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/settings_primary_group"/>
 
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                    <EditText
-                            android:id="@+id/time_ride_fac"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:layout_weight="0.2"
-                            android:clickable="true"
-                            android:focusable="false"
-                            tools:text="01:00"/>
-
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.8"
-                            android:textSize="14sp"
-                            android:gravity="center_vertical"
-                            android:text="@string/settings_alarm_choose_time"
-                            android:textColor="@color/medium_grey"/>
-
-                </LinearLayout>
-
-                <TextView
-                        android:id="@+id/next_alarm_set"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/next_alarm_set"
-                        android:textColor="@color/medium_grey"/>
-
-            </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/list_primary_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/white"
+                    android:orientation="vertical"/>
 
             <TextView
                     android:layout_width="match_parent"
@@ -138,14 +86,6 @@
                     android:textColor="@color/dark_grey"
                     android:layout_marginTop="20dp"
                     android:text="@string/settings_group"/>
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="@color/medium_grey"
-                    android:text="@string/settings_group_legendary"
-                    android:layout_marginTop="5dp"/>
 
             <LinearLayout
                     android:layout_width="wrap_content"
@@ -185,7 +125,7 @@
                     android:layout_marginStart="5dp"/>
 
             <LinearLayout
-                    android:id="@+id/list_Group"
+                    android:id="@+id/list_group"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
