@@ -1,6 +1,7 @@
 package com.blueamber.studentcalendar.domain.usecases
 
 import android.util.Log
+import com.blueamber.studentcalendar.PrefKeys
 import com.blueamber.studentcalendar.domain.local.GroupsDao
 import com.blueamber.studentcalendar.domain.local.PrimaryGroupsDao
 import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
@@ -11,6 +12,7 @@ import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.models.TypeOfSource
 import com.blueamber.studentcalendar.tools.ColorUtil
 import com.blueamber.studentcalendar.tools.DateUtil
+import com.pixplicity.easyprefs.library.Prefs
 import java.util.*
 
 class CalendarUseCase(private val remote: NetworkJsonRepository, private val locale: GroupsDao,
@@ -18,7 +20,7 @@ class CalendarUseCase(private val remote: NetworkJsonRepository, private val loc
 
     suspend fun downloadJsonCalendar(): List<TasksCalendar> {
         return try {
-            val request = remote.getCalendar()
+            val request = remote.getCalendar(Prefs.getBoolean(PrefKeys.MASTER_SELECTED_IS_ONE, true))
             val response = request.await()
             if (request.isCompleted) {
                 convert(response.body() ?: emptyMap(), locale.getGroups(), localePrimaryGroup.getPrimaryGroups())

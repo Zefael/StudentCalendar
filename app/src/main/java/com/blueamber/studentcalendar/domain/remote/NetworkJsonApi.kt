@@ -9,5 +9,8 @@ import retrofit2.http.GET
 interface NetworkJsonApi {
 
     @GET("https://raw.githubusercontent.com/master-bioinfo-bordeaux/master-bioinfo-bordeaux.github.io/master/data/calendar_m1.json")
-    fun getCalendarDto(): Deferred<Response<Map<String, CalendarJsonDto>>>
+    fun getCalendarM1Dto(): Deferred<Response<Map<String, CalendarJsonDto>>>
+
+    @GET("")
+    fun getCalendarM2Dto(): Deferred<Response<Map<String, CalendarJsonDto>>>
 }
