@@ -58,6 +58,33 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/dark_grey"
+                    android:text="@string/settings_select_master"
+                    android:layout_marginTop="10dp"/>
+
+            <RadioGroup
+                    android:id="@+id/radio_master"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+
+                <RadioButton android:id="@+id/master_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_select_master1"/>
+
+                <RadioButton android:id="@+id/master_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_select_master2"/>
+
+            </RadioGroup>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textColor="@color/medium_grey"
                     android:text="@string/settings_group_legendary"

@@ -7,5 +7,11 @@ import javax.inject.Inject
 
 class NetworkJsonRepository @Inject constructor(private val jsonApi: NetworkJsonApi) {
 
-    fun getCalendar(): Deferred<Response<Map<String, CalendarJsonDto>>> = jsonApi.getCalendarDto()
+    fun getCalendar(m1: Boolean): Deferred<Response<Map<String, CalendarJsonDto>>> {
+        return if (m1) {
+            jsonApi.getCalendarM1Dto()
+        } else {
+            jsonApi.getCalendarM2Dto()
+        }
+    }
 }
