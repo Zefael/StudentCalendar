@@ -3,6 +3,7 @@ package com.blueamber.studentcalendar.ui.settings
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.blueamber.studentcalendar.PrefKeys
 import com.blueamber.studentcalendar.domain.local.GroupsDao
 import com.blueamber.studentcalendar.domain.local.PrimaryGroupsDao
 import com.blueamber.studentcalendar.domain.remote.NetworkJsonRepository
@@ -11,6 +12,7 @@ import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
 import com.blueamber.studentcalendar.models.Groups
 import com.blueamber.studentcalendar.models.PrimaryGroups
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
@@ -55,7 +57,9 @@ class SettingsViewModel @Inject constructor(
 
     fun resetAllGroups() = launch {
         localeGroups.deleteGroups()
-        CelcatUseCase(remoteXml, localeGroups, localePrimaryGroups).downloadCelcat(app)
+        if (Prefs.getBoolean(PrefKeys.MASTER_SELECTED_IS_ONE, true)) {
+            CelcatUseCase(remoteXml, localeGroups, localePrimaryGroups).downloadCelcat(app)
+        }
         CalendarUseCase(remoteJson, localeGroups, localePrimaryGroups).downloadJsonCalendar()
         downloadGroups()
     }

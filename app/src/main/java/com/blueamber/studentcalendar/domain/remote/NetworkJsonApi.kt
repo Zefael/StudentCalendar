@@ -11,6 +11,6 @@ interface NetworkJsonApi {
     @GET("https://raw.githubusercontent.com/master-bioinfo-bordeaux/master-bioinfo-bordeaux.github.io/master/data/calendar_m1.json")
     fun getCalendarM1Dto(): Deferred<Response<Map<String, CalendarJsonDto>>>
 
-    @GET("")
+    @GET("https://raw.githubusercontent.com/master-bioinfo-bordeaux/master-bioinfo-bordeaux.github.io/master/data/calendar_m2.json")
     fun getCalendarM2Dto(): Deferred<Response<Map<String, CalendarJsonDto>>>
 }

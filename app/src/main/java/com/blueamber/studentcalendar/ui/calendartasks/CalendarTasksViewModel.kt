@@ -3,6 +3,7 @@ package com.blueamber.studentcalendar.ui.calendartasks
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.blueamber.studentcalendar.PrefKeys
 import com.blueamber.studentcalendar.domain.local.GroupsDao
 import com.blueamber.studentcalendar.domain.local.PrimaryGroupsDao
 import com.blueamber.studentcalendar.domain.local.TasksCalendarDao
@@ -12,6 +13,7 @@ import com.blueamber.studentcalendar.domain.usecases.CalendarUseCase
 import com.blueamber.studentcalendar.domain.usecases.CelcatUseCase
 import com.blueamber.studentcalendar.models.TasksCalendar
 import com.blueamber.studentcalendar.tools.DateUtil
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
@@ -31,9 +33,11 @@ class CalendarTasksViewModel @Inject constructor(
 
     fun downloadCalendars() = launch {
         locale.deleteTasks()
-        val dataCelcat = CelcatUseCase(remoteXml, localeGroups, localePrimaryGroups).downloadCelcat(app)
+        if (Prefs.getBoolean(PrefKeys.MASTER_SELECTED_IS_ONE, true)) {
+            val dataCelcat = CelcatUseCase(remoteXml, localeGroups, localePrimaryGroups).downloadCelcat(app)
+            locale.insert(dataCelcat)
+        }
         val dataOther = CalendarUseCase(remoteJson, localeGroups, localePrimaryGroups).downloadJsonCalendar()
-        locale.insert(dataCelcat)
         locale.insert(dataOther)
         val dataDay = locale.getTasksAfterDate(DateUtil.yesterday())
         withContext(UI) { dataDownloaded.value = dataDay.sorted() }
